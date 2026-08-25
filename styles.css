@@ -166,12 +166,25 @@
     }
     .site-header.scrolled { border-color: var(--line); box-shadow: 0 8px 30px rgba(61,47,38,.05); }
     .nav-wrap { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-    .brand { font: 500 1.2rem var(--serif); text-decoration: none; }
+    .brand { position: relative; font: 500 1.2rem var(--serif); text-decoration: none; }
     .brand span { color: var(--accent); }
     .desktop-nav { display: flex; align-items: center; gap: 28px; }
-    .desktop-nav a { color: var(--muted); font-size: .92rem; text-decoration: none; transition: color .2s ease; }
-    .desktop-nav a:hover { color: var(--text); }
-    .nav-cta { padding: 9px 15px; border: 1px solid var(--line); border-radius: 999px; }
+    .desktop-nav a:not(.nav-cta) { position: relative; color: var(--muted); font-size: .92rem; text-decoration: none; transition: color .2s ease; }
+    .desktop-nav a:not(.nav-cta):hover { color: var(--text); }
+    .brand::after, .desktop-nav a:not(.nav-cta)::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 1.5px;
+      background: var(--accent); transform: scaleX(0); transform-origin: left;
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .brand:hover::after, .desktop-nav a:not(.nav-cta):hover::after { transform: scaleX(1); }
+    }
+    .nav-cta {
+      padding: 9px 15px; border: 1px solid var(--line); border-radius: 999px;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .nav-cta:hover { transform: translateY(-2px); border-color: var(--accent); background: var(--surface); }
+    .nav-cta:active { transform: translateY(0) scale(.96); }
     .header-controls { display: flex; align-items: center; gap: 8px; }
     .lang-toggle, .theme-toggle {
       display: inline-flex; align-items: center; justify-content: center; height: 40px; min-width: 40px;
@@ -277,9 +290,18 @@
     .project-card h3 { margin: 20px 0 12px; font: 500 clamp(1.7rem, 3vw, 2.35rem)/1.07 var(--serif); letter-spacing: -.02em; }
     .project-card p { margin: 0 0 24px; color: var(--muted); }
     .project-card .tag-list { margin-top: auto; }
-    .project-link { display: inline-flex; align-items: center; gap: 7px; margin-top: 25px; padding: 0; border: 0; background: transparent; color: var(--accent-text); font-weight: 700; text-decoration: none; cursor: pointer; }
+    .project-link { position: relative; display: inline-flex; align-items: center; gap: 7px; margin-top: 25px; padding: 0; border: 0; background: transparent; color: var(--accent-text); font-weight: 700; text-decoration: none; cursor: pointer; transition: transform .15s ease; }
     .project-link::after { content: "↗"; transition: transform .2s ease; }
     .project-link:hover::after { transform: translate(3px, -3px); }
+    .project-link::before {
+      content: ""; position: absolute; left: 0; bottom: -3px; width: 100%; height: 1.5px;
+      background: currentColor; transform: scaleX(0); transform-origin: left;
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+    }
+    .project-link:active { transform: scale(.97); }
+    @media (hover: hover) and (pointer: fine) {
+      .project-link:hover::before { transform: scaleX(1); }
+    }
     .placeholder-card { min-height: 340px; }
     .placeholder-card .project-visual { min-height: 135px; }
     .placeholder-card .project-visual::after { display: none; }
@@ -301,8 +323,16 @@
     .repo-list { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
     .repo-item { padding: 20px 0; border-top: 1px solid var(--line); }
     .repo-top { display: flex; justify-content: space-between; gap: 16px; }
-    .repo-item a { font-weight: 750; text-decoration: none; }
+    .repo-item a { position: relative; font-weight: 750; text-decoration: none; transition: color .2s ease; }
     .repo-item a:hover { color: var(--accent-text); }
+    .repo-item a::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 1px;
+      background: currentColor; transform: scaleX(0); transform-origin: left;
+      transition: transform .3s cubic-bezier(.4,0,.2,1);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .repo-item a:hover::after { transform: scaleX(1); }
+    }
     .repo-item p { margin: 8px 0; color: var(--muted); font-size: .9rem; }
     .repo-meta { display: flex; gap: 16px; color: var(--muted); font: .72rem var(--mono); }
     .repo-language::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; background: var(--accent); }
@@ -320,7 +350,16 @@
     footer { padding: 34px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem; }
     .footer-wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
     .footer-links { display: flex; gap: 20px; }
+    .footer-links a { position: relative; transition: color .2s ease; }
     .footer-links a:hover { color: var(--text); }
+    .footer-links a::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 1px;
+      background: currentColor; transform: scaleX(0); transform-origin: left;
+      transition: transform .3s cubic-bezier(.4,0,.2,1);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .footer-links a:hover::after { transform: scaleX(1); }
+    }
 
     .not-found { min-height: calc(100vh - 77px - 88px); display: flex; align-items: center; border-top: 0; }
     .not-found-grid { max-width: 640px; }
@@ -330,8 +369,9 @@
     dialog { width: min(860px, calc(100% - 32px)); max-height: calc(100vh - 32px); padding: 0; overflow: auto; border: 1px solid var(--line); border-radius: 22px; background: var(--surface); color: var(--text); box-shadow: 0 35px 100px rgba(30,24,20,.28); }
     dialog::backdrop { background: rgba(46,44,41,.55); backdrop-filter: blur(5px); }
     .dialog-inner { padding: clamp(28px, 5vw, 56px); }
-    .dialog-close { position: sticky; z-index: 3; top: 18px; float: right; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); cursor: pointer; }
-    .dialog-close:hover { background: var(--surface-strong); }
+    .dialog-close { position: sticky; z-index: 3; top: 18px; float: right; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); cursor: pointer; transition: transform .25s cubic-bezier(.4,0,.2,1), background .2s ease, border-color .2s ease; }
+    .dialog-close:hover { background: var(--surface-strong); border-color: var(--accent); transform: rotate(90deg); }
+    .dialog-close:active { transform: rotate(90deg) scale(.9); }
     .dialog-inner h2 { margin: 18px 0; font: 500 clamp(2.5rem, 7vw, 5rem)/.95 var(--serif); letter-spacing: -.04em; }
     .dialog-summary { max-width: 670px; color: var(--muted); font-size: 1.1rem; }
     .case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 36px 0; }
@@ -393,7 +433,11 @@
       .menu-button { display: block; }
       .mobile-nav { position: fixed; inset: 76px 0 auto; display: grid; gap: 0; padding: 15px 20px 25px; border-bottom: 1px solid var(--line); background: var(--bg); transform: translateY(-130%); opacity: 0; visibility: hidden; transition: transform .25s ease, opacity .25s ease, visibility .25s; }
       .mobile-nav.open { transform: translateY(0); opacity: 1; visibility: visible; }
-      .mobile-nav a { padding: 14px 5px; border-bottom: 1px solid var(--line); font: 500 1.35rem var(--serif); text-decoration: none; }
+      .mobile-nav a {
+        padding: 14px 5px; border-bottom: 1px solid var(--line); font: 500 1.35rem var(--serif); text-decoration: none;
+        display: block; transition: transform .2s cubic-bezier(.4,0,.2,1), color .2s ease, padding-left .2s ease;
+      }
+      .mobile-nav a:active { transform: scale(.97); color: var(--accent-text); padding-left: 12px; }
       .hero { min-height: auto; padding-top: 95px; }
       .hero h1 { font-size: clamp(3.8rem, 19vw, 6rem); }
       .section-heading { grid-template-columns: 1fr; gap: 22px; }
