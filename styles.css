@@ -202,6 +202,7 @@
     .hero-note { margin: 22px 0 0; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: .88rem; }
 
     .about-grid { display: grid; grid-template-columns: .65fr 1.35fr; gap: clamp(50px, 10vw, 130px); }
+    .about-art { display: block; width: 100%; max-width: 300px; height: auto; margin-top: 40px; }
     .about-lead { margin: 0 0 26px; font: 400 clamp(1.7rem, 3.5vw, 3rem)/1.18 var(--serif); letter-spacing: -.025em; }
     .about-copy p:not(.about-lead) { max-width: 700px; color: var(--muted); }
     .principles { display: grid; gap: 0; margin-top: 42px; border-top: 1px solid var(--line); }
