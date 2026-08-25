@@ -263,6 +263,47 @@ document.addEventListener('DOMContentLoaded', () => {
     return (I18N[currentLang] && I18N[currentLang][key]) || I18N.en[key] || key;
   }
 
+  const FLY_STAGGER_MS = 18;
+
+  function wrapTextInFlyChars(root) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    let node;
+    while ((node = walker.nextNode())) {
+      if (node.nodeValue.trim() !== '') textNodes.push(node);
+    }
+    let index = 0;
+    textNodes.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      textNode.nodeValue.split(/(\s+)/).forEach(token => {
+        if (token === '') return;
+        if (/^\s+$/.test(token)) { frag.appendChild(document.createTextNode(token)); return; }
+        const wordSpan = document.createElement('span');
+        wordSpan.className = 'fly-word';
+        Array.from(token).forEach(ch => {
+          const charSpan = document.createElement('span');
+          charSpan.className = 'fly-char';
+          charSpan.textContent = ch;
+          const angle = Math.random() * Math.PI * 2;
+          const distance = 14 + Math.random() * 18;
+          charSpan.style.setProperty('--fx', `${Math.cos(angle) * distance}px`);
+          charSpan.style.setProperty('--fy', `${Math.sin(angle) * distance}px`);
+          charSpan.style.setProperty('--fr', `${(Math.random() * 24 - 12)}deg`);
+          charSpan.style.setProperty('--fly-delay', `${index * FLY_STAGGER_MS}ms`);
+          index++;
+          wordSpan.appendChild(charSpan);
+        });
+        frag.appendChild(wordSpan);
+      });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+
+  function setTextContentAnimated(el, value, isHtml, animate) {
+    el[isHtml ? 'innerHTML' : 'textContent'] = value;
+    if (animate && !prefersReducedMotion) wrapTextInFlyChars(el);
+  }
+
   let koreanFontRequested = false;
   function ensureKoreanFontLoaded() {
     if (koreanFontRequested) return;
@@ -397,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function renderGitHub(profile, repos) {
+  function renderGitHub(profile, repos, animate) {
     lastGitHubData = { profile, repos };
     lastGitHubFailed = false;
     const profileElement = document.querySelector('#github-profile');
@@ -412,16 +453,18 @@ document.addEventListener('DOMContentLoaded', () => {
       <a class="button" href="${escapeHtml(profile.html_url)}" target="_blank" rel="noopener noreferrer">${t('github.viewFullProfile')} ↗<span class="visually-hidden">${t('a11y.newTab')}</span></a>`;
     repoList.innerHTML = repos.length ? repos.map(repo => `
       <li class="repo-item"><div class="repo-top"><a href="${escapeHtml(repo.html_url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(repo.name)}<span class="visually-hidden">${t('a11y.newTab')}</span></a><span aria-label="${Number(repo.stargazers_count) || 0} stars">☆ ${Number(repo.stargazers_count) || 0}</span></div><p>${escapeHtml(repo.description || t('github.noDescription'))}</p><div class="repo-meta">${repo.language ? `<span class="repo-language">${escapeHtml(repo.language)}</span>` : ''}<span>${t('github.updated')} ${new Date(repo.updated_at).toLocaleDateString(t('dateLocale'), { year: 'numeric', month: 'short', day: 'numeric' })}</span></div></li>`).join('') : `<li class="github-message">${t('github.noRepos')}</li>`;
+    if (animate && !prefersReducedMotion) { wrapTextInFlyChars(profileElement); wrapTextInFlyChars(repoList); }
     requestScrollUpdate();
   }
 
-  function renderGitHubUnavailable() {
+  function renderGitHubUnavailable(animate) {
     lastGitHubData = null;
     lastGitHubFailed = true;
     const profileElement = document.querySelector('#github-profile');
     const repoList = document.querySelector('#repo-list');
     profileElement.innerHTML = `<div class="github-user"><div class="github-avatar" aria-hidden="true"></div><div><h3>SangU</h3><p>${t('github.unavailableTitle')}</p></div></div><p class="github-bio">${t('github.unavailableBio')}</p>`;
     repoList.innerHTML = `<li class="github-message">${t('github.repoUnavailable')}</li>`;
+    if (animate && !prefersReducedMotion) { wrapTextInFlyChars(profileElement); wrapTextInFlyChars(repoList); }
     requestScrollUpdate();
   }
 
@@ -452,13 +495,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function applyLanguage(lang) {
+  function applyLanguage(lang, animate) {
     currentLang = I18N[lang] ? lang : 'en';
     document.documentElement.lang = currentLang;
     if (currentLang === 'ko') ensureKoreanFontLoaded();
 
-    document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.getAttribute('data-i18n')); });
-    document.querySelectorAll('[data-i18n-html]').forEach(el => { el.innerHTML = t(el.getAttribute('data-i18n-html')); });
+    document.querySelectorAll('[data-i18n]').forEach(el => { setTextContentAnimated(el, t(el.getAttribute('data-i18n')), false, animate); });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => { setTextContentAnimated(el, t(el.getAttribute('data-i18n-html')), true, animate); });
     document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
 
     document.title = t('meta.title');
@@ -475,8 +518,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const open = menuButton.getAttribute('aria-expanded') === 'true';
     menuButton.setAttribute('aria-label', open ? t('a11y.closeNav') : t('a11y.openNav'));
 
-    if (lastGitHubData) renderGitHub(lastGitHubData.profile, lastGitHubData.repos);
-    else if (lastGitHubFailed) renderGitHubUnavailable();
+    if (lastGitHubData) renderGitHub(lastGitHubData.profile, lastGitHubData.repos, animate);
+    else if (lastGitHubFailed) renderGitHubUnavailable(animate);
 
     try { window.localStorage.setItem('lang', currentLang); } catch (error) {}
   }
@@ -534,18 +577,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!document.documentElement.getAttribute('data-theme')) applyThemeUi();
   });
 
-  langToggle.addEventListener('click', () => {
-    const next = currentLang === 'en' ? 'ko' : 'en';
-
-    if (prefersReducedMotion || !document.startViewTransition) {
-      applyLanguage(next);
-      return;
-    }
-
-    document.documentElement.classList.add('vt-lang');
-    const transition = document.startViewTransition(() => applyLanguage(next));
-    transition.finished.catch(() => {}).finally(() => document.documentElement.classList.remove('vt-lang'));
-  });
+  langToggle.addEventListener('click', () => { applyLanguage(currentLang === 'en' ? 'ko' : 'en', true); });
 
   let initialLang = 'en';
   try {
