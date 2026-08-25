@@ -107,39 +107,36 @@ ASAP 원칙에 따라 이후 확장 기능은 MVP 개발을 지연시키지 않�
 
 ```text
 /                       Home
+/about                   About
+/skills                  Skills
 /projects               All Projects
 /projects/[slug]        Project Detail
-/github                  GitHub Activity (선택적 독립 페이지)
+/github                  GitHub Activity
+/contact                 Contact
 /not-found               404
 ```
 
-초기 버전에서는 `/github`를 별도 페이지로 만들기보다 Home의 섹션으로 포함하는 것을 우선합니다. 표시할 정보가 많아질 때만 독립 페이지로 분리합니다.
+**2026-08-25 구현 완료.** 처음에는 앵커 스크롤 기반 단일 페이지로 시작했지만, "네브바가 소개가 아니라 실제로 다른 페이지로 이동해 각 주제를 자세히 안내하는 느낌"을 원한다는 요청에 따라 위 IA를 실제 라우팅으로 구현했습니다. `/github`도 계획대로 독립 페이지로 분리했습니다. 구현 방식은 18장을 참고하세요.
 
 ### Home 구성
 
 1. **Navigation**
-   - About
-   - Skills
-   - Projects
-   - GitHub
+   - About / Skills / Projects / GitHub — 실제 라우트로 이동 (앵커 아님)
+   - 언어·테마 토글
 2. **Hero**
    - 이름
    - `Full-Stack Developer` 직무 표현
    - 한 문장 소개
    - `View Projects` CTA
    - GitHub CTA
-3. **About**
-   - 해결하고 싶은 문제와 개발 가치관 중심의 짧은 소개
-4. **Skills**
-   - 기술을 단순 나열하지 않고 역할별로 구분
-5. **Featured Projects**
-   - 가장 경쟁력 있는 프로젝트 3~4개 우선 노출
-6. **GitHub Activity**
-   - 최근 활동 또는 대표 저장소
-   - 전체 GitHub 프로필 링크
-7. **Footer**
+3. **Explore** — About/Skills/Projects/GitHub/Contact 각 페이지로 연결되는 5개의 카드형 진입점. 각 카드는 해당 페이지의 핵심 한 문장(teaser)과 화살표로 구성되며, 클릭 시 해당 라우트로 이동합니다. Home 자체는 허브 역할만 하고, 실제 내용은 각 전용 페이지가 담당합니다.
+4. **Footer**
    - GitHub 및 필요한 외부 링크
    - 저작권 정보
+
+### About / Skills / GitHub / Contact 페이지
+
+기존 Home 내 섹션 콘텐츠를 그대로 각자의 전용 페이지로 옮겼습니다. 페이지 하단에는 이전/다음 페이지로 이어지는 페이지네이션 내비게이션을 두어, 순서대로 계속 둘러볼 수 있게 했습니다(About→Skills→Projects→GitHub→Contact→Home).
 
 ### Project Detail 구성
 
@@ -159,6 +156,8 @@ ASAP 원칙에 따라 이후 확장 기능은 MVP 개발을 지연시키지 않�
 12. GitHub 저장소 링크
 
 채용 담당자가 결과뿐 아니라 **문제를 해결한 사고 과정**을 확인할 수 있도록 작성합니다.
+
+**2026-08-25**: `/projects/review-based-content-community`가 실제로 이 템플릿을 따르는 독립 페이지로 구현됐습니다(기존에는 다이얼로그 모달이었습니다). 대표 이미지, 기간·역할, 문제, 접근 방식, 기술적 방향, 트레이드오프까지 포함하며, 프로젝트가 아직 배포 전이라 "실제 서비스 링크"·"GitHub 저장소 링크" 두 항목은 프로젝트 완성 후 추가합니다.
 
 ---
 
@@ -615,8 +614,29 @@ ASAP 목표에 맞춰 현재 버전은 프레임워크와 빌드 과정이 없�
 - **다크 모드**: `prefers-color-scheme`을 기본값으로 사용하고, 헤더의 토글 버튼으로 라이트/다크를 수동 전환할 수 있습니다. 수동 선택만 `localStorage`에 저장하며(시스템 설정을 따르는 경우 저장하지 않음), FOUC 방지를 위해 `<head>`의 동기 인라인 스크립트가 저장된 값을 첫 페인트 전에 적용합니다. 다크 팔레트는 라이트 팔레트와 동일하게 WCAG AA 대비를 실측 검증했습니다(본문 14.22:1, 보조 텍스트 6.46:1, 버튼 흰 글자 4.95~6.37:1). 헤더 배경, 상태 배지, 태그 pill 등 기존에 라이트 모드 색상이 하드코딩되어 있던 부분을 발견해 CSS 커스텀 프로퍼티로 교체했습니다.
 - **한국어 지원**: 헤더의 언어 토글로 영어·한국어를 즉시 전환하는 클라이언트 사이드 i18n입니다(`data-i18n` 속성 + `script.js`의 사전 객체, 서버/빌드 없이 구현). `localStorage`에 저장된 선택이 없으면 `navigator.language` 기준으로 한국어 브라우저에는 자동으로 한국어를 보여줍니다. GitHub 저장소 목록처럼 API로 동적 렌더링되는 영역도 언어 전환 시 마지막으로 불러온 데이터를 재사용해 다시 그립니다(재요청 없음). 한글 세리프 글꼴(Noto Serif KR)은 Georgia에 한글 글리프가 없어 헤드라인이 깨지는 문제를 발견해 추가했으며, 영어 방문자에게 불필요한 다운로드가 발생하지 않도록 실제로 한국어가 활성화될 때만 JS로 지연 로드합니다(초기 시도 시 모든 방문자에게 무거운 폰트를 무조건 로드해 Lighthouse Performance가 100→69로 떨어지는 회귀를 발견해 수정). 이 방식은 URL이 하나뿐이라 검색엔진에는 기본 언어(영어) 콘텐츠만 노출된다는 한계가 있습니다 — 실제 SEO가 필요해지면 `/ko/` 경로의 별도 정적 페이지로 전환을 검토합니다.
 - 직접 제작한 SVG 일러스트 3종: Hero 배경의 추상 네트워크 그래프(`hero-art.svg`), 대표 프로젝트 카드의 리뷰/채팅 테마 일러스트(`project-art-community.svg`, 기존 CSS mock-window를 대체), About 섹션의 "올바른 문제를 찾는다"는 메시지를 형상화한 돋보기 × 와이어프레임 일러스트(`about-art.svg`)
-- 클릭 가능한 요소 전반에 호버/탭 애니메이션을 점검해 누락된 곳을 보강했습니다: nav 링크·브랜드 로고·footer 링크·GitHub 저장소 링크에 accent색 밑줄이 자라나는 효과(데스크톱 hover 전용), 다이얼로그 닫기 버튼의 90도 회전, 모바일 메뉴 항목의 탭 시 눌림+들여쓰기 피드백. 특히 헤더의 "Contact" 버튼(`.nav-cta`)은 호버 스타일이 아예 없던 것을 발견해 다른 버튼과 통일된 hover/active 피드백을 추가했습니다.
+- 클릭 가능한 요소 전반에 호버/탭 애니메이션을 점검해 누락된 곳을 보강했습니다: nav 링크·브랜드 로고·footer 링크·GitHub 저장소 링크에 accent색 밑줄이 자라나는 효과(데스크톱 hover 전용), 모바일 메뉴 항목의 탭 시 눌림+들여쓰기 피드백. 특히 헤더의 "Contact" 버튼(`.nav-cta`)은 호버 스타일이 아예 없던 것을 발견해 다른 버튼과 통일된 hover/active 피드백을 추가했습니다.
 - `about-art.svg`의 돋보기는 SVG 내부에 자체 포함된 `<style>` + `@keyframes`로 완만하게 스캔하듯 움직입니다. `<img>` 태그로 삽입되는 SVG는 외부 페이지 JS/CSS로 내부 요소를 제어할 수 없어, 애니메이션과 `prefers-reduced-motion` 대응을 모두 SVG 파일 자체에 내장했습니다(페이지 JS가 죽어도 애니메이션 자체는 별개로 살아있는 순수 이미지라 안전).
+
+**2026-08-25 — 클라이언트 사이드 라우터 도입 (4장 IA 실제 구현)**
+
+앵커 스크롤 기반 단일 페이지에서, History API 기반 vanilla JS 라우터로 전환했습니다. 빌드 도구나 프레임워크 없이 4장에서 정의했던 IA(`/about`, `/skills`, `/projects`, `/projects/[slug]`, `/github`, `/contact`)를 실제 라우팅으로 구현했습니다.
+
+- 각 페이지의 마크업은 `index.html`에 `<template>` 태그로 보관하고, 라우터가 URL에 맞는 템플릿을 `#main`에 클론해 넣는 방식입니다. Next.js 전환은 아직 트리거 조건(17장의 마이그레이션 조건)에 해당하지 않는다고 판단했습니다.
+- 페이지 전환 시 View Transitions API로 살짝 위로 슬라이드하며 페이드인/아웃되는 애니메이션을 적용했습니다(`html.vt-route` 스코프, 테마·언어 전환과 별개 경로라 서로 간섭하지 않음). 미지원 브라우저·`prefers-reduced-motion`에서는 즉시 전환됩니다.
+- 브라우저 뒤로/앞으로 가기(`popstate`), 직접 URL 접근(딥링크), 알 수 없는 경로의 실제 404 폴백까지 모두 동작을 확인했습니다. `vercel.json`에 알려진 라우트만 명시적으로 `index.html`로 rewrite하도록 설정해, 목록에 없는 경로는 기존처럼 Vercel의 정적 404(`404.html`)가 그대로 응답합니다.
+- GitHub API 호출을 `/github` 페이지를 처음 방문할 때만 시작하도록 미뤘습니다(기존에는 홈 진입 시 항상 호출). GitHub 섹션을 한 번도 안 보는 방문자는 API 요청 자체가 발생하지 않습니다.
+- 다이얼로그 모달이었던 프로젝트 케이스 스터디를 실제 페이지(`/projects/review-based-content-community`)로 승격했습니다. 딥링크 가능, 뒤로가기 가능, `<dialog>` 관련 코드는 모두 제거했습니다.
+- 탭 간 이동에도 언어·다크 모드가 그대로 유지되도록, 페이지 전환 시 `data-i18n` 콘텐츠를 즉시(애니메이션 없이) 현재 언어로 번역합니다. 언어 토글의 문자 fly-in 애니메이션은 명시적으로 언어를 바꿀 때만 재생됩니다.
+
+**작업 중 발견하고 수정한 버그**
+
+- **상대 경로 에셋이 중첩 라우트에서 깨지는 구조적 버그**: `<img src="hero-art.svg">`처럼 슬래시 없는 상대 경로는 브라우저가 *현재 URL*을 기준으로 해석합니다. 단일 페이지였을 때는 항상 `/`였으니 문제가 없었지만, `/projects/review-based-content-community`처럼 경로가 2단계인 라우트에서는 `/projects/hero-art.svg`로 잘못 풀려 404가 났습니다. `favicon.svg`, `styles.css`, `script.js`, 일러스트 SVG 전부를 절대 경로(`/`로 시작)로 바꿔 해결했습니다. `404.html`도 같은 이유로 절대 경로로 수정했습니다.
+- **SVG에 `width`/`height` 속성이 없어 발생한 크기 버그**: `viewBox`만 있고 `width`/`height`가 없는 SVG를 `height: auto`인 `<img>`로 쓰면, 브라우저가 `viewBox` 비율 대신 CSS 기본 대체 크기(300×150)로 폴백하는 경우가 있었습니다. 세 일러스트 SVG 모두에 `viewBox`와 일치하는 `width`/`height` 속성을 명시해 해결했습니다.
+- **`loading="lazy"`가 SPA 내비게이션에서 불안정하게 동작**: 첫 화면에 바로 보이는 이미지(About 일러스트, 프로젝트 카드/상세 이미지)에 걸려 있던 `loading="lazy"`가, View Transition으로 콘텐츠가 교체되는 상황에서 로드 자체가 지연되거나 트리거되지 않는 경우를 발견했습니다. above-the-fold 이미지이므로 애초에 지연 로드가 불필요하다고 판단해 제거했습니다.
+- **초기 CLS(레이아웃 밀림) 회귀**: `<main>`이 처음엔 완전히 비어 있다가 JS가 템플릿을 채워 넣는 구조라, Lighthouse 기준 CLS가 0.166까지 나빠졌습니다(footer가 페이지 최상단 근처에서 실제 위치로 크게 이동). `#main { min-height: calc(100vh - 76px) }`로 대략적인 공간을 미리 예약해 0.001까지 개선했습니다.
+- 언어 토글 전용이었던 `nav.home`("SangU home", aria-label 문구)이 페이지네이션에도 그대로 재사용되어 "SangU home"이라는 어색한 문구가 화면에 노출되던 것을 발견 — 화면 표시용 `nav.homeLabel`("Home"/"홈")을 별도로 분리했습니다.
+- View Transition의 `ready`/`finished` 프로미스에 대한 예외 처리가 일부 누락되어 있던 것을 정리했습니다(실사용에는 영향 없는 백그라운드 탭 한정 현상이었지만, 콘솔 정리 차원에서 방어 코드를 보강).
+- **알려진 성능 트레이드오프**: 프로덕션 Lighthouse는 영어 방문 기준 100/100/100/100을 유지합니다. 다만 이 저장소를 테스트하는 로컬 환경(`navigator.language`가 `ko-KR`로 고정된 환경)에서는, Home의 Explore 섹션이 About/Skills/Projects/GitHub/Contact의 다양한 한국어 문장을 한 화면에 모아 보여주면서 Noto Serif KR의 필요한 유니코드 서브셋 개수가 늘어나, Lighthouse의 저속 네트워크 시뮬레이션 기준 Performance가 88~95 사이로 측정됩니다(CLS는 0.001로 문제 없음, LCP만 영향). README 목표치인 90점은 충족하며, 한국어 방문자 한정 트레이드오프이자 실제 사용자 네트워크에서는 시뮬레이션만큼 크지 않을 가능성이 높다고 판단해 현재 상태로 유지합니다.
 - 마우스를 따라가는 카드 스포트라이트 glow 및 3D tilt 효과(`[data-tilt]`, 스킬 카드·프로젝트 카드), 버튼 마그네틱 hover 효과, Hero 배경 아트의 scroll parallax + 완만한 idle drift 애니메이션 — 모두 `prefers-reduced-motion`과 `(hover: hover) and (pointer: fine)` 조건으로 게이팅되어 있어 모션 축소 설정이나 터치 기기에서는 비활성화됨 (애니메이션 추가 후 Lighthouse 100/100 유지 재확인)
 
 ### 로컬 실행
@@ -630,6 +650,8 @@ python3 -m http.server 8000
 
 브라우저에서 `http://localhost:8000`에 접속합니다. 별도의 패키지 설치나 환경 변수는 필요하지 않습니다.
 
+`python3 -m http.server`는 `vercel.json`의 rewrite 규칙을 해석하지 못하므로, 로컬에서는 `http://localhost:8000/`에서 링크를 클릭해 라우트를 이동하는 방식으로만 테스트할 수 있고 `http://localhost:8000/about` 같은 직접 URL 접근·새로고침은 404가 납니다. 딥링크·새로고침 동작은 Vercel에 배포된 환경에서 확인하세요.
+
 ### 무료 배포
 
 가장 빠른 배포 방법은 Vercel입니다.
@@ -638,18 +660,18 @@ python3 -m http.server 8000
 2. Vercel에서 해당 저장소를 import합니다.
 3. 저장소 상위에 다른 파일이 있다면 Root Directory를 `Project`로 지정합니다.
 4. Framework Preset은 `Other`, Build Command는 비워 두고 Output Directory는 `.`으로 지정합니다.
-5. 배포 후 발급된 URL에서 모바일, 프로젝트 dialog, 외부 링크 및 GitHub fallback을 확인합니다.
+5. 배포 후 발급된 URL에서 모바일, `/about`·`/skills`·`/projects/[slug]` 등 라우트 딥링크·새로고침, 외부 링크 및 GitHub fallback을 확인합니다.
 
-정적 파일만 사용하므로 GitHub Pages 또는 Cloudflare Pages도 비용 없는 대안입니다.
+정적 파일만 사용하므로 원칙적으로 GitHub Pages나 Cloudflare Pages도 대안이 될 수 있지만, 클라이언트 라우팅에 필요한 rewrite 규칙(`vercel.json`)은 Vercel 전용 문법입니다. 다른 플랫폼으로 옮길 경우 해당 플랫폼의 rewrite/redirect 설정(예: Cloudflare Pages의 `_redirects`)으로 별도 이전해야 `/about` 같은 라우트의 직접 접근·새로고침이 동작합니다.
 
 ### 현재 MVP와 목표 구조의 차이
 
 다음 항목은 콘텐츠 검증 후 Next.js 마이그레이션 단계에서 구현합니다.
 
-- `/projects/[slug]` 형태의 독립 프로젝트 상세 페이지와 페이지 전환 애니메이션
+- ~~`/projects/[slug]` 형태의 독립 프로젝트 상세 페이지와 페이지 전환 애니메이션~~ — 2026-08-25 vanilla JS 클라이언트 라우터로 구현 완료 (View Transitions 기반 전환 애니메이션 포함)
 - MDX 기반 프로젝트 콘텐츠 및 frontmatter 스키마 검증
-- 서버 측 GitHub API 호출 및 rate limit 완화 (현재는 클라이언트 `localStorage` 캐시로 완화)
-- 프로젝트별 metadata (현재는 사이트 전역 `sitemap.xml`, `robots.txt`, `404.html`만 구현)
+- 서버 측 GitHub API 호출 및 rate limit 완화 (현재는 클라이언트 `localStorage` 캐시 + `/github` 방문 시에만 요청하는 지연 로딩으로 완화)
+- 프로젝트별 metadata (현재는 라우트별로 `<title>`/설명/canonical/`og:url`을 클라이언트에서 갱신 — 크롤러가 JS를 실행하지 않으면 모든 라우트가 홈 콘텐츠로 보이는 한계가 있음, `sitemap.xml`에는 각 라우트 등록)
 - TypeScript strict mode, lint 및 자동화 테스트
 - `next/image`를 사용한 실제 프로젝트 screenshot 최적화
 

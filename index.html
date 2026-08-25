@@ -16,7 +16,7 @@
     })();
   </script>
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://sangu-portfolio.vercel.app/">
+  <meta property="og:url" id="meta-og-url" content="https://sangu-portfolio.vercel.app/">
   <meta property="og:title" id="meta-og-title" content="SangU — Full-Stack Developer">
   <meta property="og:description" id="meta-og-description" content="Thoughtful web applications, from interface to infrastructure.">
   <meta property="og:image" content="https://sangu-portfolio.vercel.app/og-image.png">
@@ -25,10 +25,10 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://sangu-portfolio.vercel.app/og-image.png">
   <title>SangU — Full-Stack Developer</title>
-  <link rel="canonical" href="https://sangu-portfolio.vercel.app/">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
+  <link rel="canonical" id="meta-canonical" href="https://sangu-portfolio.vercel.app/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/script.js" defer></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -61,9 +61,9 @@
   <a class="skip-link" href="#main" data-i18n="a11y.skipLink">Skip to content</a>
   <header class="site-header" id="site-header">
     <div class="container nav-wrap">
-      <a class="brand" href="#top" data-i18n-aria="nav.home" aria-label="SangU home">SangU<span>.</span></a>
+      <a class="brand" href="/" data-route data-i18n-aria="nav.home" aria-label="SangU home">SangU<span>.</span></a>
       <nav class="desktop-nav" data-i18n-aria="nav.primary" aria-label="Primary navigation">
-        <a href="#about" data-i18n="nav.about">About</a><a href="#skills" data-i18n="nav.skills">Skills</a><a href="#projects" data-i18n="nav.projects">Projects</a><a href="#github" data-i18n="nav.github">GitHub</a><a class="nav-cta" href="#contact" data-i18n="nav.contact">Contact</a>
+        <a href="/about" data-route data-i18n="nav.about">About</a><a href="/skills" data-route data-i18n="nav.skills">Skills</a><a href="/projects" data-route data-i18n="nav.projects">Projects</a><a href="/github" data-route data-i18n="nav.github">GitHub</a><a class="nav-cta" href="/contact" data-route data-i18n="nav.contact">Contact</a>
       </nav>
       <div class="header-controls">
         <button class="lang-toggle" id="lang-toggle" type="button">
@@ -79,20 +79,24 @@
       </button>
     </div>
     <nav class="mobile-nav" id="mobile-nav" data-i18n-aria="nav.mobile" aria-label="Mobile navigation">
-      <a href="#about" data-i18n="nav.about">About</a><a href="#skills" data-i18n="nav.skills">Skills</a><a href="#projects" data-i18n="nav.projects">Projects</a><a href="#github" data-i18n="nav.github">GitHub</a><a href="#contact" data-i18n="nav.contact">Contact</a>
+      <a href="/about" data-route data-i18n="nav.about">About</a><a href="/skills" data-route data-i18n="nav.skills">Skills</a><a href="/projects" data-route data-i18n="nav.projects">Projects</a><a href="/github" data-route data-i18n="nav.github">GitHub</a><a href="/contact" data-route data-i18n="nav.contact">Contact</a>
     </nav>
   </header>
 
-  <main id="main">
+  <main id="main" tabindex="-1"></main>
+
+  <footer><div class="container footer-wrap"><span data-i18n-html="footer.text">© <span id="year"></span> SangU. Built with semantic HTML, CSS, and JavaScript.</span><div class="footer-links"><a href="#main" id="back-to-top-link" data-i18n="footer.backToTop">Back to top ↑</a><a href="mailto:ehtkddn123@gmail.com" data-i18n="footer.email">Email</a></div></div></footer>
+
+  <template id="tpl-home">
     <section class="hero" id="top">
-      <img class="hero-art" src="hero-art.svg" alt="" aria-hidden="true" data-parallax>
+      <img class="hero-art" src="/hero-art.svg" alt="" aria-hidden="true" data-parallax>
       <div class="container hero-grid">
         <div data-reveal>
           <p class="eyebrow" data-i18n="hero.eyebrow">Full-Stack Developer</p>
           <h1 data-i18n-html="hero.h1">Ideas into <em>reliable</em> products.</h1>
           <p class="hero-copy" data-i18n="hero.copy">I build thoughtful, user-focused web applications—from clear interfaces to dependable APIs and data models.</p>
           <div class="actions">
-            <a class="button button-primary" href="#projects"><span data-i18n="hero.viewProjects">View projects</span> <span aria-hidden="true">↓</span></a>
+            <a class="button button-primary" href="/projects" data-route><span data-i18n="hero.viewProjects">View projects</span> <span aria-hidden="true">↓</span></a>
             <a class="button" href="https://github.com/Heesi-ong" target="_blank" rel="noopener noreferrer"><span data-i18n="hero.githubProfile">GitHub profile</span> <span aria-hidden="true">↗</span><span class="visually-hidden" data-i18n="a11y.newTab"> (opens in a new tab)</span></a>
           </div>
         </div>
@@ -103,15 +107,57 @@
       </div>
     </section>
 
-    <section class="section" id="about">
+    <section class="section" id="explore">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow" data-i18n="explore.eyebrow">Explore</p>
+          <div><h2 data-i18n="explore.h2">Where to look next.</h2><p data-i18n="explore.sub">Each stop covers one part of the story—pick where you want to start.</p></div>
+        </div>
+        <div class="explore-grid">
+          <a class="explore-card" data-tilt data-route data-reveal="scale" href="/about">
+            <span class="explore-index">01</span>
+            <h3 data-i18n="nav.about">About</h3>
+            <p data-i18n="about.lead">I care more about solving the right problem than using the newest tool.</p>
+            <span class="explore-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="explore-card" data-tilt data-route data-reveal="scale" href="/skills">
+            <span class="explore-index">02</span>
+            <h3 data-i18n="nav.skills">Skills</h3>
+            <p data-i18n="skills.sub">Skills are grouped by the role they play—not presented as a wall of logos.</p>
+            <span class="explore-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="explore-card" data-tilt data-route data-reveal="scale" href="/projects">
+            <span class="explore-index">03</span>
+            <h3 data-i18n="nav.projects">Projects</h3>
+            <p data-i18n="projects.sub">Each project is documented as a case study instead of a feature checklist.</p>
+            <span class="explore-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="explore-card" data-tilt data-route data-reveal="scale" href="/github">
+            <span class="explore-index">04</span>
+            <h3 data-i18n="nav.github">GitHub</h3>
+            <p data-i18n="github.sub">Public profile data is loaded from GitHub when the configured account is available. The portfolio remains usable without it.</p>
+            <span class="explore-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="explore-card" data-tilt data-route data-reveal="scale" href="/contact">
+            <span class="explore-index">05</span>
+            <h3 data-i18n="nav.contact">Contact</h3>
+            <p data-i18n="contact.p">I am open to full-stack opportunities and practical web projects. Tell me what problem you are trying to solve.</p>
+            <span class="explore-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-about">
+    <section class="section page-section" id="about">
       <div class="container about-grid">
         <div data-reveal="left">
           <p class="eyebrow" data-i18n="about.eyebrow">01 / About</p>
-          <img class="about-art" src="about-art.svg" alt="" aria-hidden="true" loading="lazy">
+          <img class="about-art" src="/about-art.svg" alt="" aria-hidden="true">
         </div>
         <div class="about-copy" data-reveal="right">
-          <h2 class="visually-hidden" data-i18n="nav.about">About</h2>
-          <p class="about-lead" data-i18n="about.lead">I care more about solving the right problem than using the newest tool.</p>
+          <h1 class="about-lead" data-i18n="about.lead">I care more about solving the right problem than using the newest tool.</h1>
           <p data-i18n="about.p1">I start by understanding what a user is struggling with, then choose the simplest maintainable way to solve it. My goal is code that the next developer can understand without needing an explanation.</p>
           <p data-i18n="about.p2">I work across React and TypeScript on the frontend and Django with PostgreSQL on the backend. I am currently expanding into real-time collaboration with WebSockets, Django Channels, and Redis.</p>
           <div class="principles" data-i18n-aria="about.principlesAria" aria-label="Development principles">
@@ -122,12 +168,18 @@
         </div>
       </div>
     </section>
+    <nav class="page-pagination" data-i18n-aria="pagination.aria" aria-label="Page navigation" data-reveal>
+      <a href="/" data-route class="page-pagination-link prev"><span class="page-pagination-label" data-i18n="pagination.prev">Previous</span><span data-i18n="nav.homeLabel">Home</span></a>
+      <a href="/skills" data-route class="page-pagination-link next"><span class="page-pagination-label" data-i18n="pagination.next">Next</span><span data-i18n="nav.skills">Skills</span></a>
+    </nav>
+  </template>
 
-    <section class="section" id="skills">
+  <template id="tpl-skills">
+    <section class="section page-section" id="skills">
       <div class="container">
         <div class="section-heading" data-reveal>
           <p class="eyebrow" data-i18n="skills.eyebrow">02 / Skills</p>
-          <div><h2 data-i18n="skills.h2">Tools chosen for the problem.</h2><p data-i18n="skills.sub">Skills are grouped by the role they play—not presented as a wall of logos.</p></div>
+          <div><h1 data-i18n="skills.h2">Tools chosen for the problem.</h1><p data-i18n="skills.sub">Skills are grouped by the role they play—not presented as a wall of logos.</p></div>
         </div>
         <div class="skills-grid">
           <article class="skill-card" data-tilt data-index="01" data-reveal="scale"><p class="eyebrow" data-i18n="skills.card1.eyebrow">Interface</p><h3 data-i18n="skills.card1.h3">Frontend</h3><p data-i18n="skills.card1.p">Responsive interfaces that remain clear and accessible.</p><ul class="tag-list"><li>React</li><li>Next.js</li><li>TypeScript</li><li>Tailwind CSS</li></ul></article>
@@ -137,22 +189,28 @@
         </div>
       </div>
     </section>
+    <nav class="page-pagination" data-i18n-aria="pagination.aria" aria-label="Page navigation" data-reveal>
+      <a href="/about" data-route class="page-pagination-link prev"><span class="page-pagination-label" data-i18n="pagination.prev">Previous</span><span data-i18n="nav.about">About</span></a>
+      <a href="/projects" data-route class="page-pagination-link next"><span class="page-pagination-label" data-i18n="pagination.next">Next</span><span data-i18n="nav.projects">Projects</span></a>
+    </nav>
+  </template>
 
-    <section class="section" id="projects">
+  <template id="tpl-projects">
+    <section class="section page-section" id="projects">
       <div class="container">
         <div class="projects-head" data-reveal>
-          <div><p class="eyebrow" data-i18n="projects.eyebrow">03 / Selected work</p><h2 data-i18n="projects.h2">Problems, decisions, and outcomes.</h2></div>
+          <div><p class="eyebrow" data-i18n="projects.eyebrow">03 / Selected work</p><h1 data-i18n="projects.h2">Problems, decisions, and outcomes.</h1></div>
           <p data-i18n="projects.sub">Each project is documented as a case study instead of a feature checklist.</p>
         </div>
         <div class="projects-grid">
           <article class="project-card" data-tilt data-reveal="scale">
-            <div class="project-visual has-art"><img src="project-art-community.svg" alt="" aria-hidden="true" loading="lazy"></div>
+            <div class="project-visual has-art"><img src="/project-art-community.svg" alt="" aria-hidden="true"></div>
             <div class="project-body">
               <div class="project-meta"><span data-i18n="projects.p1.meta1">01 / Full-stack</span><span class="status" data-i18n="projects.p1.status">In development</span></div>
               <h3 data-i18n="projects.p1.h3">Review-based content community</h3>
               <p data-i18n="projects.p1.p">A community for reviewing books, films, and series, with recommendations shaped by similar taste and real-time conversation.</p>
               <ul class="tag-list"><li>Django</li><li>React</li><li>WebSocket</li><li>PostgreSQL</li></ul>
-              <button class="project-link" type="button" data-dialog="project-dialog" data-i18n="projects.p1.cta">Read case study</button>
+              <a class="project-link" href="/projects/review-based-content-community" data-route data-i18n="projects.p1.cta">Read case study</a>
             </div>
           </article>
           <article class="project-card placeholder-card" data-tilt data-reveal="scale">
@@ -167,12 +225,40 @@
         </div>
       </div>
     </section>
+    <nav class="page-pagination" data-i18n-aria="pagination.aria" aria-label="Page navigation" data-reveal>
+      <a href="/skills" data-route class="page-pagination-link prev"><span class="page-pagination-label" data-i18n="pagination.prev">Previous</span><span data-i18n="nav.skills">Skills</span></a>
+      <a href="/github" data-route class="page-pagination-link next"><span class="page-pagination-label" data-i18n="pagination.next">Next</span><span data-i18n="nav.github">GitHub</span></a>
+    </nav>
+  </template>
 
-    <section class="section" id="github">
+  <template id="tpl-project-review-based-content-community">
+    <section class="section page-section project-detail">
+      <div class="container">
+        <a href="/projects" data-route class="project-detail-back">← <span data-i18n="projectDetail.back">Back to projects</span></a>
+        <p class="eyebrow" data-i18n="dialog.eyebrow">Case study / In development</p>
+        <h1 data-i18n="projects.p1.h3">Review-based content community</h1>
+        <p class="dialog-summary" data-i18n="dialog.summary">A full-stack community where people review books, films, and series, discover recommendations through shared taste, and discuss content in real time.</p>
+        <img class="project-detail-art" src="/project-art-community.svg" alt="" aria-hidden="true" data-reveal="scale">
+        <div class="case-grid" data-reveal>
+          <div class="case-item"><span data-i18n="dialog.role.label">Role</span><strong data-i18n="dialog.role.value">Full-Stack Developer</strong></div>
+          <div class="case-item"><span data-i18n="dialog.stack.label">Stack</span><strong>Django · React · PostgreSQL</strong></div>
+          <div class="case-item"><span data-i18n="dialog.status.label">Status</span><strong data-i18n="projects.p1.status">In development</strong></div>
+          <div class="case-item"><span data-i18n="dialog.focus.label">Focus</span><strong data-i18n="dialog.focus.value">Discovery · Realtime conversation</strong></div>
+        </div>
+        <section class="case-section" data-reveal><h3 data-i18n="dialog.problem.h3">The problem</h3><p data-i18n="dialog.problem.p">Ratings alone do not explain why someone enjoyed a work, while broad recommendation systems often ignore the context behind personal taste.</p></section>
+        <section class="case-section" data-reveal><h3 data-i18n="dialog.approach.h3">The approach</h3><p data-i18n="dialog.approach.p">Reviews are treated as the primary signal. The product connects structured ratings with written context and enables conversation without separating discovery from discussion.</p></section>
+        <section class="case-section" data-reveal><h3 data-i18n="dialog.technical.h3">Technical direction</h3><p data-i18n="dialog.technical.p">Django and PostgreSQL own the domain model and API. React delivers the browsing experience, while Django Channels and Redis are being evaluated for connection state and live chat.</p></section>
+        <section class="case-section" data-reveal><h3 data-i18n="dialog.tradeoff.h3">Current trade-off</h3><p data-i18n="dialog.tradeoff.p">The project prioritizes a reliable review and discovery flow before adding realtime complexity. Live features will only ship after their failure and reconnection states are defined.</p></section>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-github">
+    <section class="section page-section" id="github">
       <div class="container">
         <div class="section-heading" data-reveal>
           <p class="eyebrow" data-i18n="github.eyebrow">04 / GitHub</p>
-          <div><h2 data-i18n="github.h2">Work in the open.</h2><p data-i18n="github.sub">Public profile data is loaded from GitHub when the configured account is available. The portfolio remains usable without it.</p></div>
+          <div><h1 data-i18n="github.h2">Work in the open.</h1><p data-i18n="github.sub">Public profile data is loaded from GitHub when the configured account is available. The portfolio remains usable without it.</p></div>
         </div>
         <div class="github-shell" data-reveal="scale" aria-live="polite">
           <section class="github-profile" id="github-profile" data-i18n-aria="github.profileAria" aria-label="GitHub profile">
@@ -184,39 +270,26 @@
         </div>
       </div>
     </section>
+    <nav class="page-pagination" data-i18n-aria="pagination.aria" aria-label="Page navigation" data-reveal>
+      <a href="/projects" data-route class="page-pagination-link prev"><span class="page-pagination-label" data-i18n="pagination.prev">Previous</span><span data-i18n="nav.projects">Projects</span></a>
+      <a href="/contact" data-route class="page-pagination-link next"><span class="page-pagination-label" data-i18n="pagination.next">Next</span><span data-i18n="nav.contact">Contact</span></a>
+    </nav>
+  </template>
 
-    <section class="section contact" id="contact">
+  <template id="tpl-contact">
+    <section class="section page-section contact" id="contact">
       <div class="container" data-reveal>
         <p class="eyebrow" data-i18n="contact.eyebrow">05 / Contact</p>
-        <h2 data-i18n="contact.h2">Let’s build something useful.</h2>
+        <h1 data-i18n="contact.h2">Let’s build something useful.</h1>
         <p data-i18n="contact.p">I am open to full-stack opportunities and practical web projects. Tell me what problem you are trying to solve.</p>
         <div class="actions"><a class="button button-primary" href="mailto:ehtkddn123@gmail.com"><span data-i18n="contact.email">Send an email</span> <span aria-hidden="true">↗</span></a><a class="button" href="https://github.com/Heesi-ong" target="_blank" rel="noopener noreferrer"><span data-i18n="contact.github">Visit GitHub</span> <span aria-hidden="true">↗</span><span class="visually-hidden" data-i18n="a11y.newTab"> (opens in a new tab)</span></a></div>
       </div>
     </section>
-  </main>
-
-  <footer><div class="container footer-wrap"><span data-i18n-html="footer.text">© <span id="year"></span> SangU. Built with semantic HTML, CSS, and JavaScript.</span><div class="footer-links"><a href="#top" data-i18n="footer.backToTop">Back to top ↑</a><a href="mailto:ehtkddn123@gmail.com" data-i18n="footer.email">Email</a></div></div></footer>
-
-  <dialog id="project-dialog" aria-labelledby="case-title">
-    <div class="dialog-inner">
-      <button class="dialog-close" type="button" data-i18n-aria="dialog.closeAria" aria-label="Close case study">✕</button>
-      <p class="eyebrow" data-i18n="dialog.eyebrow">Case study / In development</p>
-      <h2 id="case-title" data-i18n="projects.p1.h3">Review-based content community</h2>
-      <p class="dialog-summary" data-i18n="dialog.summary">A full-stack community where people review books, films, and series, discover recommendations through shared taste, and discuss content in real time.</p>
-      <div class="case-grid">
-        <div class="case-item"><span data-i18n="dialog.role.label">Role</span><strong data-i18n="dialog.role.value">Full-Stack Developer</strong></div>
-        <div class="case-item"><span data-i18n="dialog.stack.label">Stack</span><strong>Django · React · PostgreSQL</strong></div>
-        <div class="case-item"><span data-i18n="dialog.status.label">Status</span><strong data-i18n="projects.p1.status">In development</strong></div>
-        <div class="case-item"><span data-i18n="dialog.focus.label">Focus</span><strong data-i18n="dialog.focus.value">Discovery · Realtime conversation</strong></div>
-      </div>
-      <section class="case-section"><h3 data-i18n="dialog.problem.h3">The problem</h3><p data-i18n="dialog.problem.p">Ratings alone do not explain why someone enjoyed a work, while broad recommendation systems often ignore the context behind personal taste.</p></section>
-      <section class="case-section"><h3 data-i18n="dialog.approach.h3">The approach</h3><p data-i18n="dialog.approach.p">Reviews are treated as the primary signal. The product connects structured ratings with written context and enables conversation without separating discovery from discussion.</p></section>
-      <section class="case-section"><h3 data-i18n="dialog.technical.h3">Technical direction</h3><p data-i18n="dialog.technical.p">Django and PostgreSQL own the domain model and API. React delivers the browsing experience, while Django Channels and Redis are being evaluated for connection state and live chat.</p></section>
-      <section class="case-section"><h3 data-i18n="dialog.tradeoff.h3">Current trade-off</h3><p data-i18n="dialog.tradeoff.p">The project prioritizes a reliable review and discovery flow before adding realtime complexity. Live features will only ship after their failure and reconnection states are defined.</p></section>
-
-    </div>
-  </dialog>
-
+    <nav class="page-pagination" data-i18n-aria="pagination.aria" aria-label="Page navigation" data-reveal>
+      <a href="/github" data-route class="page-pagination-link prev"><span class="page-pagination-label" data-i18n="pagination.prev">Previous</span><span data-i18n="nav.github">GitHub</span></a>
+      <a href="/" data-route class="page-pagination-link next"><span class="page-pagination-label" data-i18n="pagination.backHome">Back to start</span><span data-i18n="nav.homeLabel">Home</span></a>
+    </nav>
+  </template>
 
 </body>
 </html>

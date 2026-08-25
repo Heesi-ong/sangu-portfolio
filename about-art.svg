@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 460">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 460" width="380" height="460">
   <style>
     .magnifier { transform-box: fill-box; transform-origin: center; animation: magnifierScan 5.5s ease-in-out infinite; }
     .magnifier-spark { animation: sparkPulse 2.2s ease-in-out infinite; }

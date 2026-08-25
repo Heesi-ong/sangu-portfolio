@@ -3,6 +3,7 @@ document.documentElement.classList.add('js');
 const I18N = {
   en: {
     'nav.home': 'SangU home',
+    'nav.homeLabel': 'Home',
     'nav.primary': 'Primary navigation',
     'nav.mobile': 'Mobile navigation',
     'nav.about': 'About',
@@ -18,6 +19,9 @@ const I18N = {
     'hero.statusAria': 'Current status',
     'hero.availability': 'Open to full-stack opportunities',
     'hero.note': 'Based in South Korea<br>Focused on React, TypeScript, Django, and PostgreSQL.',
+    'explore.eyebrow': 'Explore',
+    'explore.h2': 'Where to look next.',
+    'explore.sub': 'Each stop covers one part of the story—pick where you want to start.',
     'about.eyebrow': '01 / About',
     'about.lead': 'I care more about solving the right problem than using the newest tool.',
     'about.p1': 'I start by understanding what a user is struggling with, then choose the simplest maintainable way to solve it. My goal is code that the next developer can understand without needing an explanation.',
@@ -54,6 +58,7 @@ const I18N = {
     'projects.p2.h3': 'The next useful thing',
     'projects.p2.p': 'This space is intentionally reserved for shipped work. No fictional metrics or unfinished claims.',
     'projects.p2.tag': 'Case study coming soon',
+    'projectDetail.back': 'Back to projects',
     'github.eyebrow': '04 / GitHub',
     'github.h2': 'Work in the open.',
     'github.sub': 'Public profile data is loaded from GitHub when the configured account is available. The portfolio remains usable without it.',
@@ -80,7 +85,6 @@ const I18N = {
     'footer.text': '© <span id="year"></span> SangU. Built with semantic HTML, CSS, and JavaScript.',
     'footer.backToTop': 'Back to top ↑',
     'footer.email': 'Email',
-    'dialog.closeAria': 'Close case study',
     'dialog.eyebrow': 'Case study / In development',
     'dialog.summary': 'A full-stack community where people review books, films, and series, discover recommendations through shared taste, and discuss content in real time.',
     'dialog.role.label': 'Role',
@@ -97,21 +101,36 @@ const I18N = {
     'dialog.technical.p': 'Django and PostgreSQL own the domain model and API. React delivers the browsing experience, while Django Channels and Redis are being evaluated for connection state and live chat.',
     'dialog.tradeoff.h3': 'Current trade-off',
     'dialog.tradeoff.p': 'The project prioritizes a reliable review and discovery flow before adding realtime complexity. Live features will only ship after their failure and reconnection states are defined.',
+    'pagination.aria': 'Page navigation',
+    'pagination.prev': 'Previous',
+    'pagination.next': 'Next',
+    'pagination.backHome': 'Back to start',
     'a11y.newTab': ' (opens in a new tab)',
     'a11y.skipLink': 'Skip to content',
     'a11y.openNav': 'Open navigation',
     'a11y.closeNav': 'Close navigation',
     'a11y.switchToDark': 'Switch to dark theme',
     'a11y.switchToLight': 'Switch to light theme',
-    'a11y.switchToKorean': 'Switch to Korean',
-    'a11y.switchToEnglish': 'Switch to English',
     'meta.title': 'SangU — Full-Stack Developer',
     'meta.description': 'SangU is a full-stack developer building thoughtful, reliable, and user-focused web applications.',
     'meta.ogDescription': 'Thoughtful web applications, from interface to infrastructure.',
+    'meta.about.title': 'About — SangU',
+    'meta.about.description': 'SangU cares more about solving the right problem than using the newest tool. Read the principles behind the work.',
+    'meta.skills.title': 'Skills — SangU',
+    'meta.skills.description': 'Frontend, backend, realtime, and workflow tools SangU uses, grouped by the role they play.',
+    'meta.projects.title': 'Projects — SangU',
+    'meta.projects.description': 'Case studies documenting the problems, decisions, and outcomes behind SangU’s work.',
+    'meta.projectDetail.title': 'Review-based content community — SangU',
+    'meta.projectDetail.description': 'A full-stack community where people review books, films, and series, discover recommendations through shared taste, and discuss content in real time.',
+    'meta.github.title': 'GitHub — SangU',
+    'meta.github.description': 'SangU’s public GitHub profile and recently updated repositories.',
+    'meta.contact.title': 'Contact — SangU',
+    'meta.contact.description': 'Get in touch with SangU about full-stack opportunities and practical web projects.',
     'dateLocale': 'en'
   },
   ko: {
     'nav.home': 'SangU 홈',
+    'nav.homeLabel': '홈',
     'nav.primary': '주 메뉴',
     'nav.mobile': '모바일 메뉴',
     'nav.about': '소개',
@@ -127,6 +146,9 @@ const I18N = {
     'hero.statusAria': '현재 상태',
     'hero.availability': '풀스택 포지션 제안을 기다리고 있습니다',
     'hero.note': '대한민국에서 활동 중입니다<br>React, TypeScript, Django, PostgreSQL을 중심으로 개발합니다.',
+    'explore.eyebrow': '탐색',
+    'explore.h2': '다음엔 어디를 볼까요.',
+    'explore.sub': '각 페이지는 이야기의 한 부분을 다룹니다—원하는 곳부터 시작해보세요.',
     'about.eyebrow': '01 / 소개',
     'about.lead': '최신 기술을 쓰는 것보다, 올바른 문제를 푸는 것을 더 중요하게 생각합니다.',
     'about.p1': '사용자가 겪는 어려움을 먼저 이해한 뒤, 가장 단순하고 유지보수하기 쉬운 방법을 선택합니다. 다음 개발자가 설명 없이도 이해할 수 있는 코드를 목표로 합니다.',
@@ -163,6 +185,7 @@ const I18N = {
     'projects.p2.h3': '다음으로 만들 유용한 것',
     'projects.p2.p': '실제로 완성된 작업만 채워질 공간입니다. 가상의 지표나 미완성 주장은 담지 않습니다.',
     'projects.p2.tag': '케이스 스터디 준비 중',
+    'projectDetail.back': '프로젝트로 돌아가기',
     'github.eyebrow': '04 / GitHub',
     'github.h2': '공개적으로 진행하는 작업.',
     'github.sub': '설정된 계정의 공개 프로필 데이터를 GitHub에서 불러옵니다. 데이터를 불러오지 못해도 포트폴리오는 정상적으로 사용할 수 있습니다.',
@@ -189,7 +212,6 @@ const I18N = {
     'footer.text': '© <span id="year"></span> SangU. 시맨틱 HTML, CSS, JavaScript로 제작했습니다.',
     'footer.backToTop': '맨 위로 ↑',
     'footer.email': '이메일',
-    'dialog.closeAria': '케이스 스터디 닫기',
     'dialog.eyebrow': '케이스 스터디 · 개발 중',
     'dialog.summary': '책, 영화, 시리즈를 리뷰하고, 비슷한 취향을 기반으로 추천을 발견하며, 실시간으로 대화할 수 있는 풀스택 커뮤니티입니다.',
     'dialog.role.label': '역할',
@@ -206,38 +228,72 @@ const I18N = {
     'dialog.technical.p': 'Django와 PostgreSQL이 도메인 모델과 API를 담당합니다. React는 탐색 경험을 제공하며, Django Channels와 Redis는 연결 상태 관리와 실시간 채팅을 위해 검토 중입니다.',
     'dialog.tradeoff.h3': '현재의 트레이드오프',
     'dialog.tradeoff.p': '실시간 기능의 복잡도를 더하기 전에, 안정적인 리뷰·발견 흐름을 먼저 완성하는 것을 우선합니다. 실시간 기능은 장애·재연결 상태가 정의된 뒤에만 배포합니다.',
+    'pagination.aria': '페이지 이동',
+    'pagination.prev': '이전',
+    'pagination.next': '다음',
+    'pagination.backHome': '처음으로',
     'a11y.newTab': ' (새 탭에서 열림)',
     'a11y.skipLink': '본문 바로가기',
     'a11y.openNav': '메뉴 열기',
     'a11y.closeNav': '메뉴 닫기',
     'a11y.switchToDark': '다크 모드로 전환',
     'a11y.switchToLight': '라이트 모드로 전환',
-    'a11y.switchToKorean': '한국어로 전환',
-    'a11y.switchToEnglish': '영어로 전환',
     'meta.title': 'SangU — 풀스택 개발자',
     'meta.description': 'SangU는 신중하고 신뢰할 수 있으며 사용자 중심의 웹 애플리케이션을 만드는 풀스택 개발자입니다.',
     'meta.ogDescription': '인터페이스부터 인프라까지, 신중하게 만든 웹 애플리케이션.',
+    'meta.about.title': '소개 — SangU',
+    'meta.about.description': 'SangU는 최신 기술보다 올바른 문제를 푸는 것을 더 중요하게 생각합니다. 작업의 바탕이 되는 원칙을 소개합니다.',
+    'meta.skills.title': '기술 스택 — SangU',
+    'meta.skills.description': 'SangU가 사용하는 프론트엔드, 백엔드, 실시간, 워크플로우 도구를 역할별로 정리했습니다.',
+    'meta.projects.title': '프로젝트 — SangU',
+    'meta.projects.description': 'SangU의 작업을 문제, 의사결정, 결과 중심의 케이스 스터디로 기록합니다.',
+    'meta.projectDetail.title': '리뷰 기반 콘텐츠 커뮤니티 — SangU',
+    'meta.projectDetail.description': '책, 영화, 시리즈를 리뷰하고 비슷한 취향을 기반으로 추천을 발견하며 실시간으로 대화할 수 있는 풀스택 커뮤니티입니다.',
+    'meta.github.title': 'GitHub — SangU',
+    'meta.github.description': 'SangU의 공개 GitHub 프로필과 최근 업데이트된 저장소입니다.',
+    'meta.contact.title': '문의 — SangU',
+    'meta.contact.description': '풀스택 포지션과 실용적인 웹 프로젝트에 대해 SangU에게 문의하세요.',
     'dateLocale': 'ko'
   }
 };
 
+const SITE_ORIGIN = 'https://sangu-portfolio.vercel.app';
+
+const ROUTES = [
+  { path: '/', tpl: 'tpl-home', metaKey: 'home' },
+  { path: '/about', tpl: 'tpl-about', metaKey: 'about' },
+  { path: '/skills', tpl: 'tpl-skills', metaKey: 'skills' },
+  { path: '/projects', tpl: 'tpl-projects', metaKey: 'projects' },
+  { path: '/projects/review-based-content-community', tpl: 'tpl-project-review-based-content-community', metaKey: 'projectDetail' },
+  { path: '/github', tpl: 'tpl-github', metaKey: 'github' },
+  { path: '/contact', tpl: 'tpl-contact', metaKey: 'contact' }
+];
+
 document.addEventListener('DOMContentLoaded', () => {
   const GITHUB_USER = 'Heesi-ong';
+  const main = document.querySelector('#main');
   const menuButton = document.querySelector('#menu-button');
   const mobileNav = document.querySelector('#mobile-nav');
   const header = document.querySelector('#site-header');
-  const dialog = document.querySelector('#project-dialog');
   const scrollProgressBar = document.querySelector('#scroll-progress-bar');
-  const heroArt = document.querySelector('.hero-art');
   const themeToggle = document.querySelector('#theme-toggle');
   const langToggle = document.querySelector('#lang-toggle');
   const themeColorMeta = document.querySelector('#theme-color-meta');
+  const metaDescriptionEl = document.querySelector('#meta-description');
+  const ogTitleEl = document.querySelector('#meta-og-title');
+  const ogDescriptionEl = document.querySelector('#meta-og-description');
+  const ogUrlEl = document.querySelector('#meta-og-url');
+  const canonicalEl = document.querySelector('#meta-canonical');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const supportsFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   let scrollFrame = null;
+  let heroArt = null;
   let currentLang = 'en';
+  let currentRoute = null;
+  let isFirstRender = true;
   let lastGitHubData = null;
   let lastGitHubFailed = false;
+  let githubLoadStarted = false;
 
   const preloader = document.querySelector('#preloader');
   if (preloader) {
@@ -299,9 +355,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function setTextContentAnimated(el, value, isHtml, animate) {
-    el[isHtml ? 'innerHTML' : 'textContent'] = value;
-    if (animate && !prefersReducedMotion) wrapTextInFlyChars(el);
+  function translateDocument(animate) {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const value = t(el.getAttribute('data-i18n'));
+      el.textContent = value;
+      if (animate && !prefersReducedMotion) wrapTextInFlyChars(el);
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const value = t(el.getAttribute('data-i18n-html'));
+      el.innerHTML = value;
+      if (animate && !prefersReducedMotion) wrapTextInFlyChars(el);
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
+    const yearEl = document.querySelector('#year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
   }
 
   let koreanFontRequested = false;
@@ -342,6 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
       menuButton.focus();
     }
   });
+
   function updateScrollState() {
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     const progress = maxScroll > 0 ? Math.min(Math.max(window.scrollY / maxScroll, 0), 1) : 0;
@@ -364,27 +432,29 @@ document.addEventListener('DOMContentLoaded', () => {
     requestScrollUpdate();
   });
   window.addEventListener('scroll', requestScrollUpdate, { passive: true });
-  updateScrollState();
 
-  document.querySelectorAll('[data-dialog]').forEach(button => button.addEventListener('click', () => dialog.showModal()));
-  dialog.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
-  dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
-
-  const revealItems = document.querySelectorAll('[data-reveal]');
-  if (!prefersReducedMotion && 'IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
-    }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
-    revealItems.forEach((item, index) => { item.style.transitionDelay = `${Math.min(index % 4, 3) * 70}ms`; observer.observe(item); });
-  } else {
-    revealItems.forEach(item => item.classList.add('visible'));
+  let revealObserver = null;
+  function setupRevealFor(root) {
+    const items = root.querySelectorAll('[data-reveal]');
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+      items.forEach(item => item.classList.add('visible'));
+      return;
+    }
+    if (!revealObserver) {
+      revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); } });
+      }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+    }
+    items.forEach((item, index) => { item.style.transitionDelay = `${Math.min(index % 4, 3) * 70}ms`; revealObserver.observe(item); });
   }
 
   if (!prefersReducedMotion && supportsFinePointer) {
     const TILT_MAX_DEG = 6;
+    const MAGNET_STRENGTH = 0.25;
 
-    document.querySelectorAll('[data-tilt]').forEach(card => {
-      card.addEventListener('pointermove', event => {
+    document.addEventListener('pointermove', event => {
+      const card = event.target.closest('[data-tilt]');
+      if (card) {
         const rect = card.getBoundingClientRect();
         const px = (event.clientX - rect.left) / rect.width;
         const py = (event.clientY - rect.top) / rect.height;
@@ -392,22 +462,23 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.setProperty('--my', `${py * 100}%`);
         card.style.setProperty('--rx', `${(px - 0.5) * TILT_MAX_DEG * 2}deg`);
         card.style.setProperty('--ry', `${(0.5 - py) * TILT_MAX_DEG * 2}deg`);
-      });
-      card.addEventListener('pointerleave', () => {
-        card.style.setProperty('--rx', '0deg');
-        card.style.setProperty('--ry', '0deg');
-      });
-    });
-
-    const MAGNET_STRENGTH = 0.25;
-    document.querySelectorAll('.button').forEach(button => {
-      button.addEventListener('pointermove', event => {
+      }
+      const button = event.target.closest('.button');
+      if (button) {
         const rect = button.getBoundingClientRect();
         const dx = event.clientX - (rect.left + rect.width / 2);
         const dy = event.clientY - (rect.top + rect.height / 2);
         button.style.transform = `translate(${dx * MAGNET_STRENGTH}px, ${dy * MAGNET_STRENGTH - 3}px)`;
-      });
-      button.addEventListener('pointerleave', () => { button.style.transform = ''; });
+      }
+    });
+    document.addEventListener('pointerout', event => {
+      const card = event.target.closest('[data-tilt]');
+      if (card && !card.contains(event.relatedTarget)) {
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      }
+      const button = event.target.closest('.button');
+      if (button && !button.contains(event.relatedTarget)) button.style.transform = '';
     });
   }
 
@@ -443,6 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
     lastGitHubFailed = false;
     const profileElement = document.querySelector('#github-profile');
     const repoList = document.querySelector('#repo-list');
+    if (!profileElement || !repoList) return;
     profileElement.innerHTML = `
       <div class="github-user">
         <img class="github-avatar" src="${escapeHtml(profile.avatar_url)}" width="74" height="74" alt="${escapeHtml(profile.name || profile.login)} GitHub avatar">
@@ -462,6 +534,7 @@ document.addEventListener('DOMContentLoaded', () => {
     lastGitHubFailed = true;
     const profileElement = document.querySelector('#github-profile');
     const repoList = document.querySelector('#repo-list');
+    if (!profileElement || !repoList) return;
     profileElement.innerHTML = `<div class="github-user"><div class="github-avatar" aria-hidden="true"></div><div><h3>SangU</h3><p>${t('github.unavailableTitle')}</p></div></div><p class="github-bio">${t('github.unavailableBio')}</p>`;
     repoList.innerHTML = `<li class="github-message">${t('github.repoUnavailable')}</li>`;
     if (animate && !prefersReducedMotion) { wrapTextInFlyChars(profileElement); wrapTextInFlyChars(repoList); }
@@ -495,25 +568,113 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function loadGitHubIfNeeded() {
+    if (githubLoadStarted) {
+      if (lastGitHubData) renderGitHub(lastGitHubData.profile, lastGitHubData.repos);
+      else if (lastGitHubFailed) renderGitHubUnavailable();
+      return;
+    }
+    githubLoadStarted = true;
+    loadGitHub();
+  }
+
+  function metaField(route, field) {
+    return route.metaKey === 'home' ? t(`meta.${field}`) : t(`meta.${route.metaKey}.${field}`);
+  }
+
+  function applyMetaForRoute(route) {
+    const title = metaField(route, 'title');
+    const description = metaField(route, 'description');
+    const ogDescription = route.metaKey === 'home' ? t('meta.ogDescription') : description;
+    const url = SITE_ORIGIN + (route.path === '/' ? '/' : route.path);
+    document.title = title;
+    if (metaDescriptionEl) metaDescriptionEl.setAttribute('content', description);
+    if (ogTitleEl) ogTitleEl.setAttribute('content', title);
+    if (ogDescriptionEl) ogDescriptionEl.setAttribute('content', ogDescription);
+    if (canonicalEl) canonicalEl.setAttribute('href', url);
+    if (ogUrlEl) ogUrlEl.setAttribute('content', url);
+  }
+
+  function updateActiveNav(route) {
+    document.querySelectorAll('a[data-route]').forEach(link => {
+      let linkPath;
+      try { linkPath = new URL(link.getAttribute('href'), window.location.origin).pathname.replace(/\/+$/, '') || '/'; }
+      catch (error) { linkPath = link.getAttribute('href'); }
+      if (linkPath === route.path) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+  }
+
+  function matchRoute(pathname) {
+    const normalized = pathname.replace(/\/+$/, '') || '/';
+    return ROUTES.find(route => route.path === normalized) || null;
+  }
+
+  function afterRouteRender(route) {
+    currentRoute = route;
+    translateDocument(false);
+    applyMetaForRoute(route);
+    updateActiveNav(route);
+    heroArt = document.querySelector('.hero-art');
+    setupRevealFor(main);
+    if (route.metaKey === 'github') loadGitHubIfNeeded();
+    window.scrollTo(0, 0);
+    main.focus({ preventScroll: true });
+    requestScrollUpdate();
+  }
+
+  function renderRoute(route, options) {
+    const push = options && options.push !== false;
+    const path = (options && options.path) || route.path;
+
+    const applyChanges = () => {
+      const template = document.querySelector('#' + route.tpl);
+      main.innerHTML = '';
+      if (template) main.appendChild(template.content.cloneNode(true));
+      afterRouteRender(route);
+    };
+
+    if (!isFirstRender && !prefersReducedMotion && document.startViewTransition) {
+      document.documentElement.classList.add('vt-route');
+      const transition = document.startViewTransition(applyChanges);
+      transition.ready.catch(() => {});
+      transition.finished.catch(() => {}).finally(() => document.documentElement.classList.remove('vt-route'));
+    } else {
+      applyChanges();
+    }
+
+    if (push) history.pushState(null, '', path);
+    isFirstRender = false;
+  }
+
+  function navigateTo(path) {
+    const route = matchRoute(path);
+    if (!route) { window.location.href = path; return; }
+    if (currentRoute === route && path === window.location.pathname) return;
+    renderRoute(route, { push: true, path });
+  }
+
+  document.addEventListener('click', event => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const link = event.target.closest('a[data-route]');
+    if (!link) return;
+    event.preventDefault();
+    navigateTo(link.getAttribute('href'));
+  });
+
+  window.addEventListener('popstate', () => {
+    const route = matchRoute(window.location.pathname);
+    if (route) renderRoute(route, { push: false, path: window.location.pathname });
+    else window.location.reload();
+  });
+
   function applyLanguage(lang, animate) {
     currentLang = I18N[lang] ? lang : 'en';
     document.documentElement.lang = currentLang;
     if (currentLang === 'ko') ensureKoreanFontLoaded();
 
-    document.querySelectorAll('[data-i18n]').forEach(el => { setTextContentAnimated(el, t(el.getAttribute('data-i18n')), false, animate); });
-    document.querySelectorAll('[data-i18n-html]').forEach(el => { setTextContentAnimated(el, t(el.getAttribute('data-i18n-html')), true, animate); });
-    document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
-
-    document.title = t('meta.title');
-    const metaDescription = document.querySelector('#meta-description');
-    const ogTitle = document.querySelector('#meta-og-title');
-    const ogDescription = document.querySelector('#meta-og-description');
-    if (metaDescription) metaDescription.setAttribute('content', t('meta.description'));
-    if (ogTitle) ogTitle.setAttribute('content', t('meta.title'));
-    if (ogDescription) ogDescription.setAttribute('content', t('meta.ogDescription'));
-
-    const yearEl = document.querySelector('#year');
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
+    translateDocument(animate);
+    if (currentRoute) applyMetaForRoute(currentRoute);
 
     const open = menuButton.getAttribute('aria-expanded') === 'true';
     menuButton.setAttribute('aria-label', open ? t('a11y.closeNav') : t('a11y.openNav'));
@@ -570,7 +731,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { duration: 550, easing: 'ease-in-out', pseudoElement: '::view-transition-new(root)' }
       );
     }).catch(() => {});
-    transition.finished.finally(() => document.documentElement.classList.remove('vt-theme'));
+    transition.finished.catch(() => {}).finally(() => document.documentElement.classList.remove('vt-theme'));
   });
 
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
@@ -583,8 +744,11 @@ document.addEventListener('DOMContentLoaded', () => {
   try {
     initialLang = window.localStorage.getItem('lang') || (navigator.language && navigator.language.toLowerCase().indexOf('ko') === 0 ? 'ko' : 'en');
   } catch (error) {}
-  applyLanguage(initialLang);
-  applyThemeUi();
+  currentLang = I18N[initialLang] ? initialLang : 'en';
+  document.documentElement.lang = currentLang;
+  if (currentLang === 'ko') ensureKoreanFontLoaded();
 
-  loadGitHub();
+  const initialRoute = matchRoute(window.location.pathname) || ROUTES[0];
+  renderRoute(initialRoute, { push: false, path: window.location.pathname });
+  applyThemeUi();
 });
