@@ -552,7 +552,7 @@ chore: configure linting
   - 액센트 텍스트 전용 (링크, 아이콘 등 배경 위에 직접 올리는 작은 글씨): `#A94F32` — 배경 대비 4.75:1
   - 검증: 기존 서브(`#7D756D` → 3.95:1)와 액센트(`#B35437` → 4.32:1)는 작은 글씨 기준(4.5:1) 미달이라 위와 같이 조정함. 톤은 기존과 거의 동일하게 유지.
 - 다크 모드 포함 여부 (**기본안: MVP에서는 단일 테마**) : X
-- 개인 도메인 보유 여부 (**기본안: Vercel 제공 도메인으로 먼저 배포**) : X
+- 개인 도메인 보유 여부: X — **Vercel 제공 도메인으로 배포 완료: https://sangu-portfolio.vercel.app/** (2026-08-25)
 
 이 항목들은 콘텐츠와 브랜딩에 직접 영향을 주지만, 프로젝트 기반 설정과 공통 컴포넌트 개발은 기본안으로 먼저 시작할 수 있습니다.
 
@@ -600,7 +600,7 @@ ASAP 목표에 맞춰 현재 버전은 프레임워크와 빌드 과정이 없�
 - 확인되지 않은 GitHub 활동이나 깨진 프로필 링크를 노출하지 않는 안전한 오류 상태
 - skip link, 키보드 포커스, ESC 메뉴 닫기 및 semantic landmark
 - 새 창 링크 안내 및 `noopener noreferrer` 적용
-- 기본 SEO, Open Graph 메타데이터(`og:image` 포함) 및 `Person` JSON-LD
+- 기본 SEO, Open Graph 메타데이터(`og:image`, `og:url` 포함) 및 `Person` + `WebSite` JSON-LD, `canonical` URL
 - WCAG AA 기준을 충족하도록 검증한 기본 색상 토큰
 - SVG 파비콘(`favicon.svg`) 및 Open Graph 카드 이미지(`og-image.svg` 원본을 headless Chrome으로 `og-image.png` 1200×630 래스터화하여 메타 태그에 사용, SVG 소스는 추후 수정용으로 보관)
 - `robots.txt`, `sitemap.xml`, 브랜드와 일치하는 `404.html`
@@ -643,7 +643,7 @@ python3 -m http.server 8000
 - TypeScript strict mode, lint 및 자동화 테스트
 - `next/image`를 사용한 실제 프로젝트 screenshot 최적화
 
-`robots.txt`와 `sitemap.xml`은 실제 배포 도메인이 정해지지 않아 `https://sangu-portfolio.vercel.app`을 임시 값으로 사용했습니다. Vercel에서 실제 URL이 발급되면 두 파일의 도메인을 교체해야 합니다.
+`robots.txt`, `sitemap.xml`, `canonical`, `og:url`, `og:image`, `twitter:image`에 사용한 `https://sangu-portfolio.vercel.app`은 실제 배포 후 확정된 프로덕션 URL입니다.
 
 아래 조건 중 하나가 충족되면 정적 MVP를 Next.js + TypeScript + MDX 구조로 이전합니다.
 
