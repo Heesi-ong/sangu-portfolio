@@ -239,6 +239,26 @@ document.addEventListener('DOMContentLoaded', () => {
   let lastGitHubData = null;
   let lastGitHubFailed = false;
 
+  const preloader = document.querySelector('#preloader');
+  if (preloader) {
+    if (prefersReducedMotion) {
+      preloader.remove();
+    } else {
+      let preloaderHidden = false;
+      const hidePreloader = () => {
+        if (preloaderHidden) return;
+        preloaderHidden = true;
+        preloader.classList.add('hidden');
+        setTimeout(() => preloader.remove(), 600);
+      };
+      const preloaderStart = performance.now();
+      window.addEventListener('load', () => {
+        setTimeout(hidePreloader, Math.max(0, 500 - (performance.now() - preloaderStart)));
+      });
+      setTimeout(hidePreloader, 3000);
+    }
+  }
+
   function t(key) {
     return (I18N[currentLang] && I18N[currentLang][key]) || I18N.en[key] || key;
   }
@@ -477,11 +497,35 @@ document.addEventListener('DOMContentLoaded', () => {
     updateThemeColorMeta();
   }
 
-  themeToggle.addEventListener('click', () => {
-    const next = getEffectiveTheme() === 'dark' ? 'light' : 'dark';
+  function setTheme(next) {
     document.documentElement.setAttribute('data-theme', next);
     try { window.localStorage.setItem('theme', next); } catch (error) {}
     applyThemeUi();
+  }
+
+  themeToggle.addEventListener('click', () => {
+    const next = getEffectiveTheme() === 'dark' ? 'light' : 'dark';
+
+    if (prefersReducedMotion || !document.startViewTransition) {
+      setTheme(next);
+      return;
+    }
+
+    const rect = themeToggle.getBoundingClientRect();
+    const originX = rect.left + rect.width / 2;
+    const originY = rect.top + rect.height / 2;
+    const endRadius = Math.hypot(
+      Math.max(originX, window.innerWidth - originX),
+      Math.max(originY, window.innerHeight - originY)
+    );
+
+    const transition = document.startViewTransition(() => setTheme(next));
+    transition.ready.then(() => {
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${originX}px ${originY}px)`, `circle(${endRadius}px at ${originX}px ${originY}px)`] },
+        { duration: 550, easing: 'ease-in-out', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(() => {});
   });
 
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
