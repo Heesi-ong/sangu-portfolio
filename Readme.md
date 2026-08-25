@@ -607,7 +607,9 @@ ASAP 목표에 맞춰 현재 버전은 프레임워크와 빌드 과정이 없�
 - GitHub API 응답의 `localStorage` 캐싱(TTL 30분, stale-while-revalidate) — 캐시가 있으면 즉시 렌더링 후 백그라운드에서 갱신하며, 요청이 실패해도 최신 캐시가 있으면 이를 그대로 보여줘 API rate limit이나 일시 장애 상황에서도 화면이 비지 않음
 - About 섹션에 시각적으로 숨겨진(`visually-hidden`) `h2`를 추가해 스크린 리더의 제목 탐색 시 섹션이 누락되지 않도록 수정 (기존에는 `h1` 다음 섹션에 제목 태그가 없었음)
 - `script.js`에 `defer` 속성을 추가해 렌더링 차단 제거 (Lighthouse render-blocking 진단에서 확인)
-- Lighthouse 로컬 감사 결과: Performance, Accessibility, Best Practices, SEO **모두 100/100** (2장 Success Criteria의 90점 이상 목표를 충족하며 실측 검증 완료, 실제 배포 환경에서는 재측정 권장)
+- Lighthouse 로컬 및 프로덕션(`sangu-portfolio.vercel.app`) 감사 결과: Performance, Accessibility, Best Practices, SEO **모두 100/100**
+- 직접 제작한 SVG 일러스트 2종: Hero 배경의 추상 네트워크 그래프(`hero-art.svg`), 대표 프로젝트 카드의 리뷰/채팅 테마 일러스트(`project-art-community.svg`, 기존 CSS mock-window를 대체)
+- 마우스를 따라가는 카드 스포트라이트 glow 및 3D tilt 효과(`[data-tilt]`, 스킬 카드·프로젝트 카드), 버튼 마그네틱 hover 효과, Hero 배경 아트의 scroll parallax + 완만한 idle drift 애니메이션 — 모두 `prefers-reduced-motion`과 `(hover: hover) and (pointer: fine)` 조건으로 게이팅되어 있어 모션 축소 설정이나 터치 기기에서는 비활성화됨 (애니메이션 추가 후 Lighthouse 100/100 유지 재확인)
 
 ### 로컬 실행
 

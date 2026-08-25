@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="none">
+  <defs>
+    <radialGradient id="heroGlow" cx="50%" cy="42%" r="60%">
+      <stop offset="0%" stop-color="#ead9cf" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ead9cf" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="heroGlow2" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#b35437" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#b35437" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="330" cy="280" r="260" fill="url(#heroGlow)"/>
+  <circle cx="220" cy="420" r="170" fill="url(#heroGlow2)"/>
+
+  <g stroke="#c9bdad" stroke-width="1.5" opacity="0.9">
+    <path d="M320 300 L 150 190"/>
+    <path d="M320 300 L 470 160"/>
+    <path d="M320 300 L 500 330"/>
+    <path d="M320 300 L 380 470"/>
+    <path d="M320 300 L 150 420"/>
+    <path d="M320 300 L 200 300"/>
+    <path d="M470 160 L 500 330" opacity="0.5"/>
+    <path d="M150 190 L 150 420" opacity="0.5"/>
+  </g>
+
+  <g>
+    <circle cx="320" cy="300" r="20" fill="#b35437"/>
+    <circle cx="320" cy="300" r="20" fill="none" stroke="#883b27" stroke-width="1.5"/>
+  </g>
+
+  <g fill="#faf7f1" stroke="#dcd4c8" stroke-width="1.5">
+    <circle cx="150" cy="190" r="12"/>
+    <circle cx="470" cy="160" r="15"/>
+    <circle cx="500" cy="330" r="10"/>
+    <circle cx="380" cy="470" r="13"/>
+    <circle cx="150" cy="420" r="11"/>
+    <circle cx="200" cy="300" r="8"/>
+  </g>
+
+  <g fill="#a94f32">
+    <circle cx="150" cy="190" r="4"/>
+    <circle cx="470" cy="160" r="4"/>
+    <circle cx="500" cy="330" r="4"/>
+    <circle cx="380" cy="470" r="4"/>
+    <circle cx="150" cy="420" r="4"/>
+  </g>
+
+  <g stroke="#dcd4c8" stroke-width="1.5" opacity="0.7">
+    <path d="M40 60 h48"/>
+    <path d="M40 60 v48"/>
+    <path d="M600 580 h-48"/>
+    <path d="M600 580 v-48"/>
+  </g>
+</svg>

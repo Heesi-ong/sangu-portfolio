@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 260">
+  <defs>
+    <radialGradient id="pcGlowA" cx="80%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#ead9cf" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#ead9cf" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="pcGlowB" cx="12%" cy="95%" r="50%">
+      <stop offset="0%" stop-color="#b35437" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#b35437" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="520" height="260" fill="#eee7dc"/>
+  <circle cx="430" cy="30" r="190" fill="url(#pcGlowA)"/>
+  <circle cx="60" cy="260" r="150" fill="url(#pcGlowB)"/>
+
+  <g transform="translate(120,150) rotate(-9)">
+    <rect x="-58" y="-70" width="116" height="140" rx="10" fill="#dccbbf" opacity="0.9"/>
+  </g>
+
+  <g transform="translate(210,142) rotate(6)">
+    <rect x="-70" y="-84" width="140" height="168" rx="12" fill="#faf7f1" stroke="#dcd4c8" stroke-width="1.5"/>
+    <rect x="-52" y="-64" width="104" height="66" rx="6" fill="#ead9cf"/>
+    <path d="M-52 -50 h50 M-52 -40 v40 M-2 -50 v50" stroke="#b35437" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <rect x="-52" y="14" width="70" height="8" rx="4" fill="#dcd4c8"/>
+    <rect x="-52" y="30" width="104" height="6" rx="3" fill="#e5ddd0"/>
+    <rect x="-52" y="42" width="80" height="6" rx="3" fill="#e5ddd0"/>
+    <g transform="translate(-52,58)" fill="#b35437">
+      <path d="M4 0 L5.8 3.6 L9.8 4.2 L6.9 7 L7.6 11 L4 9.1 L0.4 11 L1.1 7 L-1.8 4.2 L2.2 3.6 Z"/>
+      <path d="M20 0 L21.8 3.6 L25.8 4.2 L22.9 7 L23.6 11 L20 9.1 L16.4 11 L17.1 7 L14.2 4.2 L18.2 3.6 Z"/>
+      <path d="M36 0 L37.8 3.6 L41.8 4.2 L38.9 7 L39.6 11 L36 9.1 L32.4 11 L33.1 7 L30.2 4.2 L34.2 3.6 Z"/>
+      <path d="M52 0 L53.8 3.6 L57.8 4.2 L54.9 7 L55.6 11 L52 9.1 L48.4 11 L49.1 7 L46.2 4.2 L50.2 3.6 Z"/>
+      <path d="M68 0 L69.8 3.6 L73.8 4.2 L70.9 7 L71.6 11 L68 9.1 L64.4 11 L65.1 7 L62.2 4.2 L66.2 3.6 Z" fill="none" stroke="#b35437" stroke-width="1.4"/>
+    </g>
+  </g>
+
+  <g transform="translate(360,72)">
+    <path d="M-46 -30 h92 a10 10 0 0 1 10 10 v38 a10 10 0 0 1 -10 10 h-64 l-18 18 v-18 h-10 a10 10 0 0 1 -10 -10 v-38 a10 10 0 0 1 10 -10 Z" fill="#33312e"/>
+    <circle cx="-14" cy="8" r="4.5" fill="#f2efe9"/>
+    <circle cx="0" cy="8" r="4.5" fill="#f2efe9"/>
+    <circle cx="14" cy="8" r="4.5" fill="#f2efe9"/>
+  </g>
+
+  <g transform="translate(300,206)" opacity="0.9">
+    <circle r="16" fill="#a94f32"/>
+    <text x="0" y="5" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#f2efe9">S</text>
+  </g>
+</svg>

@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const header = document.querySelector('#site-header');
   const dialog = document.querySelector('#project-dialog');
   const scrollProgressBar = document.querySelector('#scroll-progress-bar');
+  const heroArt = document.querySelector('.hero-art');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const supportsFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   let scrollFrame = null;
 
   function closeMenu() {
@@ -35,6 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const progress = maxScroll > 0 ? Math.min(Math.max(window.scrollY / maxScroll, 0), 1) : 0;
     header.classList.toggle('scrolled', window.scrollY > 10);
     scrollProgressBar.style.transform = `scaleX(${progress})`;
+    if (heroArt && !prefersReducedMotion) {
+      const parallax = Math.min(window.scrollY, 600) * 0.12;
+      heroArt.style.setProperty('--parallax-y', `${parallax}px`);
+    }
     scrollFrame = null;
   }
 
@@ -55,13 +62,44 @@ document.addEventListener('DOMContentLoaded', () => {
   dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
 
   const revealItems = document.querySelectorAll('[data-reveal]');
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+  if (!prefersReducedMotion && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
     }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
     revealItems.forEach((item, index) => { item.style.transitionDelay = `${Math.min(index % 4, 3) * 70}ms`; observer.observe(item); });
   } else {
     revealItems.forEach(item => item.classList.add('visible'));
+  }
+
+  if (!prefersReducedMotion && supportsFinePointer) {
+    const TILT_MAX_DEG = 6;
+
+    document.querySelectorAll('[data-tilt]').forEach(card => {
+      card.addEventListener('pointermove', event => {
+        const rect = card.getBoundingClientRect();
+        const px = (event.clientX - rect.left) / rect.width;
+        const py = (event.clientY - rect.top) / rect.height;
+        card.style.setProperty('--mx', `${px * 100}%`);
+        card.style.setProperty('--my', `${py * 100}%`);
+        card.style.setProperty('--rx', `${(px - 0.5) * TILT_MAX_DEG * 2}deg`);
+        card.style.setProperty('--ry', `${(0.5 - py) * TILT_MAX_DEG * 2}deg`);
+      });
+      card.addEventListener('pointerleave', () => {
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      });
+    });
+
+    const MAGNET_STRENGTH = 0.25;
+    document.querySelectorAll('.button').forEach(button => {
+      button.addEventListener('pointermove', event => {
+        const rect = button.getBoundingClientRect();
+        const dx = event.clientX - (rect.left + rect.width / 2);
+        const dy = event.clientY - (rect.top + rect.height / 2);
+        button.style.transform = `translate(${dx * MAGNET_STRENGTH}px, ${dy * MAGNET_STRENGTH - 3}px)`;
+      });
+      button.addEventListener('pointerleave', () => { button.style.transform = ''; });
+    });
   }
 
   function escapeHtml(value = '') {

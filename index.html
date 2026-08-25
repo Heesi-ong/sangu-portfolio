@@ -59,6 +59,7 @@
 
   <main id="main">
     <section class="hero" id="top">
+      <img class="hero-art" src="hero-art.svg" alt="" aria-hidden="true" data-parallax>
       <div class="container hero-grid">
         <div data-reveal>
           <p class="eyebrow">Full-Stack Developer</p>
@@ -100,10 +101,10 @@
           <div><h2>Tools chosen for the problem.</h2><p>Skills are grouped by the role they play—not presented as a wall of logos.</p></div>
         </div>
         <div class="skills-grid">
-          <article class="skill-card" data-index="01" data-reveal="scale"><p class="eyebrow">Interface</p><h3>Frontend</h3><p>Responsive interfaces that remain clear and accessible.</p><ul class="tag-list"><li>React</li><li>Next.js</li><li>TypeScript</li><li>Tailwind CSS</li></ul></article>
-          <article class="skill-card" data-index="02" data-reveal="scale"><p class="eyebrow">System</p><h3>Backend</h3><p>Predictable APIs, authentication, and relational data models.</p><ul class="tag-list"><li>Python</li><li>Django</li><li>DRF</li><li>PostgreSQL</li></ul></article>
-          <article class="skill-card" data-index="03" data-reveal="scale"><p class="learning">Currently learning</p><h3>Realtime</h3><p>Live product experiences with resilient connection states.</p><ul class="tag-list"><li>WebSocket</li><li>Channels</li><li>Redis</li></ul></article>
-          <article class="skill-card" data-index="04" data-reveal="scale"><p class="eyebrow">Delivery</p><h3>Workflow</h3><p>Versioned, testable work delivered through a repeatable process.</p><ul class="tag-list"><li>Git</li><li>GitHub</li><li>Vercel</li><li>pnpm</li></ul></article>
+          <article class="skill-card" data-tilt data-index="01" data-reveal="scale"><p class="eyebrow">Interface</p><h3>Frontend</h3><p>Responsive interfaces that remain clear and accessible.</p><ul class="tag-list"><li>React</li><li>Next.js</li><li>TypeScript</li><li>Tailwind CSS</li></ul></article>
+          <article class="skill-card" data-tilt data-index="02" data-reveal="scale"><p class="eyebrow">System</p><h3>Backend</h3><p>Predictable APIs, authentication, and relational data models.</p><ul class="tag-list"><li>Python</li><li>Django</li><li>DRF</li><li>PostgreSQL</li></ul></article>
+          <article class="skill-card" data-tilt data-index="03" data-reveal="scale"><p class="learning">Currently learning</p><h3>Realtime</h3><p>Live product experiences with resilient connection states.</p><ul class="tag-list"><li>WebSocket</li><li>Channels</li><li>Redis</li></ul></article>
+          <article class="skill-card" data-tilt data-index="04" data-reveal="scale"><p class="eyebrow">Delivery</p><h3>Workflow</h3><p>Versioned, testable work delivered through a repeatable process.</p><ul class="tag-list"><li>Git</li><li>GitHub</li><li>Vercel</li><li>pnpm</li></ul></article>
         </div>
       </div>
     </section>
@@ -115,8 +116,8 @@
           <p>Each project is documented as a case study instead of a feature checklist.</p>
         </div>
         <div class="projects-grid">
-          <article class="project-card" data-reveal="scale">
-            <div class="project-visual" aria-hidden="true"><div class="mock-window"><div class="mock-bar"></div><div class="mock-content"><div class="mock-avatar"></div><div class="mock-lines"><i></i><i></i><i></i></div></div></div></div>
+          <article class="project-card" data-tilt data-reveal="scale">
+            <div class="project-visual has-art"><img src="project-art-community.svg" alt="" aria-hidden="true" loading="lazy"></div>
             <div class="project-body">
               <div class="project-meta"><span>01 / Full-stack</span><span class="status">In development</span></div>
               <h3>Review-based content community</h3>
@@ -125,7 +126,7 @@
               <button class="project-link" type="button" data-dialog="project-dialog">Read case study</button>
             </div>
           </article>
-          <article class="project-card placeholder-card" data-reveal="scale">
+          <article class="project-card placeholder-card" data-tilt data-reveal="scale">
             <div class="project-visual" aria-hidden="true"><div class="mock-window"><div class="mock-bar"></div></div></div>
             <div class="project-body">
               <div class="project-meta"><span>02 / Next project</span><span class="status">Planned</span></div>
