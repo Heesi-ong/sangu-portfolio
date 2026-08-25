@@ -519,6 +519,7 @@ document.addEventListener('DOMContentLoaded', () => {
       Math.max(originY, window.innerHeight - originY)
     );
 
+    document.documentElement.classList.add('vt-theme');
     const transition = document.startViewTransition(() => setTheme(next));
     transition.ready.then(() => {
       document.documentElement.animate(
@@ -526,13 +527,25 @@ document.addEventListener('DOMContentLoaded', () => {
         { duration: 550, easing: 'ease-in-out', pseudoElement: '::view-transition-new(root)' }
       );
     }).catch(() => {});
+    transition.finished.finally(() => document.documentElement.classList.remove('vt-theme'));
   });
 
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
     if (!document.documentElement.getAttribute('data-theme')) applyThemeUi();
   });
 
-  langToggle.addEventListener('click', () => { applyLanguage(currentLang === 'en' ? 'ko' : 'en'); });
+  langToggle.addEventListener('click', () => {
+    const next = currentLang === 'en' ? 'ko' : 'en';
+
+    if (prefersReducedMotion || !document.startViewTransition) {
+      applyLanguage(next);
+      return;
+    }
+
+    document.documentElement.classList.add('vt-lang');
+    const transition = document.startViewTransition(() => applyLanguage(next));
+    transition.finished.catch(() => {}).finally(() => document.documentElement.classList.remove('vt-lang'));
+  });
 
   let initialLang = 'en';
   try {
