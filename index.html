@@ -16,16 +16,16 @@
     })();
   </script>
   <meta property="og:type" content="website">
-  <meta property="og:url" id="meta-og-url" content="https://sangu-portfolio.vercel.app/">
+  <meta property="og:url" id="meta-og-url" content="https://sangu.kro.kr/">
   <meta property="og:title" id="meta-og-title" content="SangU — Full-Stack Developer">
   <meta property="og:description" id="meta-og-description" content="Thoughtful web applications, from interface to infrastructure.">
-  <meta property="og:image" content="https://sangu-portfolio.vercel.app/og-image.png">
+  <meta property="og:image" content="https://sangu.kro.kr/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://sangu-portfolio.vercel.app/og-image.png">
+  <meta name="twitter:image" content="https://sangu.kro.kr/og-image.png">
   <title>SangU — Full-Stack Developer</title>
-  <link rel="canonical" id="meta-canonical" href="https://sangu-portfolio.vercel.app/">
+  <link rel="canonical" id="meta-canonical" href="https://sangu.kro.kr/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="stylesheet" href="/styles.css">
   <script src="/script.js" defer></script>
@@ -45,7 +45,7 @@
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "SangU — Full-Stack Developer",
-      "url": "https://sangu-portfolio.vercel.app/"
+      "url": "https://sangu.kro.kr/"
     }
   </script>
 </head>
@@ -213,13 +213,14 @@
               <a class="project-link" href="/projects/review-based-content-community" data-route data-i18n="projects.p1.cta">Read case study</a>
             </div>
           </article>
-          <article class="project-card placeholder-card" data-tilt data-reveal="scale">
-            <div class="project-visual" aria-hidden="true"><div class="mock-window"><div class="mock-bar"></div></div></div>
+          <article class="project-card" data-tilt data-reveal="scale">
+            <div class="project-visual has-art"><img src="/project-art-cloud.svg" alt="" aria-hidden="true"></div>
             <div class="project-body">
-              <div class="project-meta"><span data-i18n="projects.p2.meta1">02 / Next project</span><span class="status" data-i18n="projects.p2.status">Planned</span></div>
-              <h3 data-i18n="projects.p2.h3">The next useful thing</h3>
-              <p data-i18n="projects.p2.p">This space is intentionally reserved for shipped work. No fictional metrics or unfinished claims.</p>
-              <ul class="tag-list"><li data-i18n="projects.p2.tag">Case study coming soon</li></ul>
+              <div class="project-meta"><span data-i18n="projects.p2.meta1">02 / Cloud service</span><span class="status" data-i18n="projects.p2.status">Live</span></div>
+              <h3 data-i18n="projects.p2.h3">SangU Cloud</h3>
+              <p data-i18n="projects.p2.p">A Raspberry Pi personal cloud for browser-based file upload, preview, download, rename, and admin-only deletion.</p>
+              <ul class="tag-list"><li>Node.js</li><li>nginx</li><li>Raspberry Pi</li><li>Tailscale</li></ul>
+              <a class="project-link" href="/projects/sangu-cloud" data-route data-i18n="projects.p2.cta">Read case study</a>
             </div>
           </article>
         </div>
@@ -249,6 +250,29 @@
         <section class="case-section" data-reveal><h3 data-i18n="dialog.approach.h3">The approach</h3><p data-i18n="dialog.approach.p">Reviews are treated as the primary signal. The product connects structured ratings with written context and enables conversation without separating discovery from discussion.</p></section>
         <section class="case-section" data-reveal><h3 data-i18n="dialog.technical.h3">Technical direction</h3><p data-i18n="dialog.technical.p">Django and PostgreSQL own the domain model and API. React delivers the browsing experience, while Django Channels and Redis are being evaluated for connection state and live chat.</p></section>
         <section class="case-section" data-reveal><h3 data-i18n="dialog.tradeoff.h3">Current trade-off</h3><p data-i18n="dialog.tradeoff.p">The project prioritizes a reliable review and discovery flow before adding realtime complexity. Live features will only ship after their failure and reconnection states are defined.</p></section>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-project-sangu-cloud">
+    <section class="section page-section project-detail">
+      <div class="container">
+        <a href="/projects" data-route class="project-detail-back">← <span data-i18n="projectDetail.back">Back to projects</span></a>
+        <p class="eyebrow" data-i18n="cloud.eyebrow">Case study / Live service</p>
+        <h1 data-i18n="projects.p2.h3">SangU Cloud</h1>
+        <p class="dialog-summary" data-i18n="cloud.summary">A private cloud file manager hosted on a Raspberry Pi and restricted to trusted devices on a Tailscale tailnet.</p>
+        <img class="project-detail-art" src="/project-art-cloud.svg" alt="" aria-hidden="true" data-reveal="scale">
+        <div class="case-grid" data-reveal>
+          <div class="case-item"><span data-i18n="dialog.role.label">Role</span><strong data-i18n="dialog.role.value">Full-Stack Developer</strong></div>
+          <div class="case-item"><span data-i18n="dialog.stack.label">Stack</span><strong>Node.js · nginx · Raspberry Pi</strong></div>
+          <div class="case-item"><span data-i18n="dialog.status.label">Status</span><strong data-i18n="projects.p2.status">Live</strong></div>
+          <div class="case-item"><span data-i18n="dialog.focus.label">Focus</span><strong data-i18n="cloud.focus.value">File management · Deployment</strong></div>
+        </div>
+        <section class="case-section" data-reveal><h3 data-i18n="cloud.problem.h3">The problem</h3><p data-i18n="cloud.problem.p">I wanted a small cloud service that could run on my own Raspberry Pi, keep files accessible from the browser, and avoid depending on a paid storage platform for basic personal workflows.</p></section>
+        <section class="case-section" data-reveal><h3 data-i18n="cloud.approach.h3">The approach</h3><p data-i18n="cloud.approach.p">The service keeps the interface focused on upload, folder creation, preview, download, rename, and delete actions. nginx forwards only Tailnet traffic to the Node.js app, while Tailscale provides encrypted access without exposing the service to the public internet.</p></section>
+        <section class="case-section" data-reveal><h3 data-i18n="cloud.technical.h3">Technical direction</h3><p data-i18n="cloud.technical.p">Node.js handles session-aware file operations, systemd keeps the service running, nginx enforces the Tailnet-only route, and Tailscale provides the private network path.</p></section>
+        <section class="case-section" data-reveal><h3 data-i18n="cloud.tradeoff.h3">Current trade-off</h3><p data-i18n="cloud.tradeoff.p">The project favors server-owned storage and private access over public sharing convenience. Only approved Tailnet devices can open the running service.</p></section>
+        <section class="case-section" data-reveal><h3 data-i18n="cloud.links.h3">Access</h3><p data-i18n="cloud.links.private">The running service is private and available only to approved devices on the Tailnet.</p></section>
       </div>
     </section>
   </template>

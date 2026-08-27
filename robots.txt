@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sangu-portfolio.vercel.app/sitemap.xml
+Sitemap: https://sangu.kro.kr/sitemap.xml
