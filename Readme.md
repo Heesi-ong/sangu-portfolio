@@ -687,3 +687,48 @@ python3 -m http.server 8000
 현재 우선순위는 프레임워크 전환보다 **실제 프로젝트의 기간, 역할, 저장소, 화면 이미지, 문제 해결 과정 및 결과를 보강하는 것**입니다.
 
 > GitHub 연동 확인 완료: `Heesi-ong` 공개 프로필과 저장소 API가 정상 응답하며, `index.html`에서 프로필과 최근 non-fork 저장소를 자동으로 표시합니다.
+
+---
+
+## 19. GSAP Rebuild (2026-08-28)
+
+이 섹션은 **8장(과도한 애니메이션 배제)과 15장(애니메이션 최하위 우선순위)의 일부를 의도적으로 뒤집는** 전면 재구성 결과를 기록합니다. 목표가 "짧은 시간에 역량을 전달"에서 "몰입형 모션으로 각 페이지를 보여주기"로 이동했으며, 성능 손실을 감수하기로 했습니다. (SangU Cloud 프로젝트/서비스는 이 작업에서 건드리지 않았습니다 — 포트폴리오만 재구성.)
+
+### 구조
+
+그린필드로 다시 작성했습니다. 4장의 멀티 라우트 IA(`/`, `/about`, `/skills`, `/projects`, `/projects/[slug]` ×2, `/github`, `/contact`, 404)는 그대로 유지하고, 각 라우트를 몰입형으로 재설계했습니다.
+
+- `index.html` — 셸(고정 헤더/푸터/캔버스/커서/커튼) + 라우트별 `<template>`
+- `styles.css` — 글래시 3D 뎁스 디자인 시스템. 라이트/다크(둘 다 WCAG AA 대비 검증), 한국어 타이포 오버라이드, Fraunces + Inter + JetBrains Mono(구글 폰트), 한국어는 Noto Serif/Sans KR 지연 로드
+- `assets/js/app.js` — 코어: History API 라우터, 클라이언트 i18n(en/ko), 테마 토글(View Transitions 원형 확산), GitHub 공개 API(`localStorage` 30분 캐시 + fallback), 라우트별 `<title>`/description/canonical/og
+- `assets/js/motion.js` — GSAP 3.13 모션 레이어
+- `vendor/` — GSAP 3.13 + ScrollTrigger + ScrollSmoother + SplitText + CustomEase (self-hosted, 2025년부터 전 플러그인 무료)
+- `build.sh` — `vendor/*` + `app.js` + `motion.js` → **단일 `script.js`** 로 연결(concatenation만, 번들러/미니파이어 없음). 각 파일이 독립 IIFE라 안전.
+
+### 모션 (motion.js)
+
+- **ScrollSmoother** 스무스 스크롤 셸(`#smooth-wrapper > #smooth-content`, 고정 UI는 셸 밖)
+- **SplitText** 헤딩 단어 단위 마스크 등장(`[data-split]`), Hero는 즉시 재생, 나머지는 ScrollTrigger
+- **ScrollTrigger** `[data-anim]` 리빌(fade/left/right/scale), `/skills`는 가로 스크롤 핀 씬
+- 마우스 추종 **커스텀 커서**, **3D 틸트 + 유리 sheen**(`[data-tilt]`), **마그네틱 버튼**(`[data-magnetic]`)
+- 배경 **캔버스 깊이 파티클** 필드(포인터/스크롤 시차)
+- 라우트 전환 **커튼 와이프**, 스크롤 진행 레일, 스킬 마퀴(스크롤 속도 연동)
+
+### 안전장치 (progressive enhancement 유지)
+
+- GSAP 미로드 또는 `prefers-reduced-motion` → `motion.js`가 조기 종료, `.motion-ready` 미적용 → **모든 콘텐츠가 그냥 보임**
+- `[data-anim]` 리빌은 CSS가 소유(`.motion-ready`가 있을 때만 숨김) — GSAP이 멈춰도 워치독(3.5s)이 전체 표시
+- `?motion=off` 쿼리로 모션 완전 비활성(QA용)
+- ScrollTrigger 미로드 시에도 정적으로 안전하게 동작
+
+### 배포
+
+- 참조 파일: `index.html`, `styles.css`, `script.js`, `favicon.svg`, `robots.txt`, `sitemap.xml`, `404.html`, `og-image.png` — **모두 라즈베리파이 `server.js`의 `publicFiles` 화이트리스트에 이미 존재** → 파이 쪽은 파일 복사만, `server.js` 수정·서비스 재시작 불필요
+- 도메인: `sang9.kro.kr` (canonical/og/sitemap 모두 갱신)
+- `assets/`·`vendor/`는 소스로만 커밋(빌드 입력). `index.html`은 `/script.js` 하나만 로드.
+- 코드 변경 시: `assets/js/*.js` 또는 `vendor/*` 수정 → `./build.sh` → 커밋
+
+### 알려진 제약
+
+- Lighthouse Performance는 GSAP + 캔버스 + 스무스 스크롤로 90 미만 가능(의도된 트레이드오프). Accessibility/SEO/Best Practices는 유지 목표.
+- SplitText는 크롤러가 JS를 실행하지 않으면 무의미 — 헤딩 원문은 `data-i18n`/`data-i18n-html`로 DOM에 존재.
