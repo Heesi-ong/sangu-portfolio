@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sangu.kro.kr/sitemap.xml
+Sitemap: https://sang9.kro.kr/sitemap.xml

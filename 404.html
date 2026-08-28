@@ -1,63 +1,54 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#f2efe9" id="theme-color-meta">
+  <meta name="theme-color" content="#f4f1ea">
   <script>
     (function () {
+      var d = document.documentElement;
+      d.classList.remove('no-js');
       try {
-        var theme = localStorage.getItem('theme');
-        if (theme === 'light' || theme === 'dark') document.documentElement.setAttribute('data-theme', theme);
-        var lang = localStorage.getItem('lang') || (navigator.language && navigator.language.toLowerCase().indexOf('ko') === 0 ? 'ko' : 'en');
-        if (lang === 'ko') document.documentElement.setAttribute('lang', 'ko');
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') d.setAttribute('data-theme', t);
+        if ((localStorage.getItem('lang') || (navigator.language || '').toLowerCase().slice(0, 2)) === 'ko') d.setAttribute('lang', 'ko');
       } catch (e) {}
     })();
   </script>
-  <title>Page not found — SangU</title>
+  <title>Not found — SangU</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,460&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap">
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <a class="skip-link" href="#main" data-i18n="skipLink">Skip to content</a>
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="/" aria-label="SangU home">SangU<span>.</span></a>
-    </div>
+  <div class="bg-field" aria-hidden="true"></div>
+  <header class="site-header is-scrolled">
+    <div class="shell nav-row"><a class="brand" href="/">SangU<b>.</b></a></div>
   </header>
-
   <main id="main">
-    <section class="section not-found">
-      <div class="container not-found-grid">
-        <p class="eyebrow" data-i18n="eyebrow">404 / Not found</p>
-        <h1 data-i18n="heading">This page doesn't exist.</h1>
-        <p class="not-found-copy" data-i18n="copy">The link may be outdated, or the page moved. Head back to the homepage to find what you're looking for.</p>
-        <div class="actions">
-          <a class="button button-primary" href="/" data-i18n="home">Back to home</a>
-          <a class="button" href="/projects" data-i18n="projects">View projects</a>
-        </div>
+    <section class="section">
+      <div class="shell--narrow shell contact-block">
+        <p class="eyebrow">404</p>
+        <h1 id="h">This page slipped off the grid.</h1>
+        <p class="lede" id="p">The link may be old or mistyped. Everything else is still here.</p>
+        <a class="btn btn--primary" href="/"><span id="b">Back to start</span><span class="arrow" aria-hidden="true">→</span></a>
       </div>
     </section>
   </main>
-
-  <footer><div class="container footer-wrap"><span>© <span id="year"></span> SangU. <span data-i18n="builtWith">Built with semantic HTML, CSS, and JavaScript.</span></span><div class="footer-links"><a href="/" data-i18n="backToTop">Back to top ↑</a><a href="mailto:ehtkddn123@gmail.com" data-i18n="email">Email</a></div></div></footer>
-
   <script>
-    var DICT = {
-      en: { skipLink: 'Skip to content', eyebrow: '404 / Not found', heading: "This page doesn't exist.", copy: "The link may be outdated, or the page moved. Head back to the homepage to find what you're looking for.", home: 'Back to home', projects: 'View projects', builtWith: 'Built with semantic HTML, CSS, and JavaScript.', backToTop: 'Back to top ↑', email: 'Email' },
-      ko: { skipLink: '본문 바로가기', eyebrow: '404 / 페이지를 찾을 수 없음', heading: '존재하지 않는 페이지입니다.', copy: '링크가 오래되었거나 페이지가 이동되었을 수 있습니다. 홈으로 돌아가 원하시는 내용을 찾아보세요.', home: '홈으로 돌아가기', projects: '프로젝트 보기', builtWith: '시맨틱 HTML, CSS, JavaScript로 제작했습니다.', backToTop: '맨 위로 ↑', email: '이메일' }
-    };
-    var lang = document.documentElement.lang === 'ko' ? 'ko' : 'en';
-    document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = DICT[lang][el.getAttribute('data-i18n')]; });
-    if (lang === 'ko') {
-      document.title = '페이지를 찾을 수 없음 — SangU';
-      var pc1 = document.createElement('link'); pc1.rel = 'preconnect'; pc1.href = 'https://fonts.googleapis.com';
-      var pc2 = document.createElement('link'); pc2.rel = 'preconnect'; pc2.href = 'https://fonts.gstatic.com'; pc2.crossOrigin = 'anonymous';
-      var sheet = document.createElement('link'); sheet.rel = 'stylesheet'; sheet.href = 'https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500&display=swap';
-      document.head.append(pc1, pc2, sheet);
+    if (document.documentElement.lang === 'ko') {
+      document.title = '찾을 수 없음 — SangU';
+      document.getElementById('h').textContent = '이 페이지는 그리드에서 벗어났습니다.';
+      document.getElementById('p').textContent = '링크가 오래됐거나 잘못 입력됐을 수 있습니다. 나머지는 그대로 있습니다.';
+      document.getElementById('b').textContent = '처음으로';
+      var l = document.createElement('link');
+      l.rel = 'stylesheet';
+      l.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&family=Noto+Serif+KR:wght@400;500&display=swap';
+      document.head.appendChild(l);
     }
-    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
