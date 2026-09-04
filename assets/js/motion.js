@@ -33,7 +33,7 @@
   }
 
   /* --------------------------------------------------------- plugins --- */
-  [window.ScrollTrigger, window.ScrollSmoother, window.SplitText, window.CustomEase].forEach(function (p) {
+  [window.ScrollTrigger, window.ScrollSmoother, window.SplitText].forEach(function (p) {
     if (p) { try { g.registerPlugin(p); } catch (e) {} }
   });
   var ST = window.ScrollTrigger;

@@ -14,7 +14,6 @@ OUT=script.js
     vendor/ScrollTrigger.min.js \
     vendor/ScrollSmoother.min.js \
     vendor/SplitText.min.js \
-    vendor/CustomEase.min.js \
     assets/js/app.js \
     assets/js/motion.js
   do

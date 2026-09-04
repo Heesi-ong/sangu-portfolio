@@ -491,7 +491,7 @@
 
   function matchRoute(pathname) {
     var n = pathname.replace(/\/+$/, '') || '/';
-    return ROUTES.filter(function (r) { return r.path === n; })[0] || null;
+    return ROUTES.find(function (r) { return r.path === n; }) || null;
   }
 
   function paint(route, notFound) {
