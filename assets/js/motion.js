@@ -51,7 +51,13 @@
     if (bailed) return;
     bailed = true;
     document.documentElement.classList.remove('motion-ready');
-    document.querySelectorAll('[data-anim]').forEach(function (el) { el.classList.add('is-inview'); });
+    document.querySelectorAll('[data-anim]').forEach(function (el) {
+      el.classList.add('is-inview');
+      // A g.from() may have already stamped inline opacity/transform via
+      // immediateRender before its trigger ever fired — clear it or the element
+      // stays invisible for good.
+      g.set(el, { clearProps: 'opacity,transform,translate,rotate,scale,x,y' });
+    });
     document.querySelectorAll('[data-split]').forEach(function (el) {
       el.style.opacity = 1;
       g.set(el.querySelectorAll('div, span'), { clearProps: 'transform,opacity' });
@@ -346,7 +352,9 @@
   /* ---------------------------------------------- page transition --- */
   var curtain = document.getElementById('curtain');
   window.__pageTransition = function (swap) {
-    if (!curtain) { swap(); return; }
+    // No curtain, or motion already bailed (frozen ticker) — swap straight away
+    // so navigation never stalls waiting on a timeline that will not tick.
+    if (!curtain || bailed) { swap(); return; }
     if (smoother) smoother.paused(true);
     g.timeline()
       .set(curtain, { scaleY: 0, transformOrigin: 'bottom' })

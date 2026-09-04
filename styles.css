@@ -239,6 +239,7 @@ html:not(.has-smooth-scroll) #smooth-wrapper { position: static; overflow: visib
 .section {
   position: relative;
   padding-block: clamp(88px, 14vh, 176px);
+  scroll-margin-top: calc(var(--header-h) + 24px);
 }
 .section--tight { padding-block: clamp(56px, 8vh, 104px); }
 
@@ -1025,7 +1026,8 @@ p a:not(.btn):hover { text-decoration-color: currentColor; }
   place-items: center;
   padding-block: clamp(40px, 8vh, 90px);
 }
-.contact-block h1 { font-size: clamp(2.4rem, 6vw, 4.4rem); }
+.contact-block h1,
+.contact-block h2 { font-size: clamp(2.4rem, 6vw, 4.4rem); }
 .contact-block .lede { text-align: center; max-width: 40ch; }
 .contact-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 1em; }
 .contact-mail {
@@ -1053,7 +1055,10 @@ p a:not(.btn):hover { text-decoration-color: currentColor; }
   color: var(--muted);
 }
 .case-back:hover { color: var(--accent-text); }
-.case h1 { font-size: clamp(2rem, 5vw, 3.4rem); }
+.case h1,
+.case-title { font-size: clamp(2rem, 5vw, 3.4rem); }
+/* Case studies inlined into the Projects section of the single page */
+.case--inline { margin-top: clamp(56px, 9vw, 120px); }
 .case-summary { font-size: clamp(1.1rem, 1.6vw, 1.4rem); color: var(--muted); line-height: 1.55; }
 .case-hero {
   border-radius: var(--radius-xl);
@@ -1078,7 +1083,8 @@ p a:not(.btn):hover { text-decoration-color: currentColor; }
 .case-fact span { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); }
 .case-fact strong { font-weight: 550; color: var(--text-strong); }
 .case-section { display: grid; gap: 0.7em; }
-.case-section h3 { font-size: 1.4rem; }
+.case-section h3,
+.case-section h4 { font-size: 1.4rem; }
 .case-section p { color: var(--muted); }
 
 /* =============================================================================
@@ -1154,7 +1160,8 @@ html:lang(ko) .display { line-height: 1.2; font-size: clamp(2.2rem, 5vw, 4rem); 
 html:lang(ko) .hero h1 { max-width: 12ch; }
 html:lang(ko) .lede { word-break: keep-all; }
 html:lang(ko) p { word-break: keep-all; }
-html:lang(ko) .contact-block h1 { font-size: clamp(2rem, 5vw, 3.4rem); }
+html:lang(ko) .contact-block h1,
+html:lang(ko) .contact-block h2 { font-size: clamp(2rem, 5vw, 3.4rem); }
 
 /* =============================================================================
    Reduced motion / no-JS

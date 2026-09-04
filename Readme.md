@@ -639,6 +639,8 @@ ASAP 목표에 맞춰 현재 버전은 프레임워크와 빌드 과정이 없�
 - **알려진 성능 트레이드오프**: 프로덕션 Lighthouse는 영어 방문 기준 100/100/100/100을 유지합니다. 다만 이 저장소를 테스트하는 로컬 환경(`navigator.language`가 `ko-KR`로 고정된 환경)에서는, Home의 Explore 섹션이 About/Skills/Projects/GitHub/Contact의 다양한 한국어 문장을 한 화면에 모아 보여주면서 Noto Serif KR의 필요한 유니코드 서브셋 개수가 늘어나, Lighthouse의 저속 네트워크 시뮬레이션 기준 Performance가 88~95 사이로 측정됩니다(CLS는 0.001로 문제 없음, LCP만 영향). README 목표치인 90점은 충족하며, 한국어 방문자 한정 트레이드오프이자 실제 사용자 네트워크에서는 시뮬레이션만큼 크지 않을 가능성이 높다고 판단해 현재 상태로 유지합니다.
 - 마우스를 따라가는 카드 스포트라이트 glow 및 3D tilt 효과(`[data-tilt]`, 스킬 카드·프로젝트 카드), 버튼 마그네틱 hover 효과, Hero 배경 아트의 scroll parallax + 완만한 idle drift 애니메이션 — 모두 `prefers-reduced-motion`과 `(hover: hover) and (pointer: fine)` 조건으로 게이팅되어 있어 모션 축소 설정이나 터치 기기에서는 비활성화됨 (애니메이션 추가 후 Lighthouse 100/100 유지 재확인)
 
+> **이후 변경**: 위 다중 라우트 구조와 다이얼로그→페이지 승격 내용은 2026-08-28 GSAP 재구성(19장)을 거쳐, 같은 날 **단일 페이지 + `/github` 전용 라우트**로 다시 통합되었습니다. 현재 라우팅·IA 기준은 19장을 참조하세요.
+
 ### 로컬 실행
 
 파일을 직접 열 수도 있지만 GitHub API와 실제 배포 환경에 가까운 동작을 확인하려면 로컬 HTTP 서버 사용을 권장합니다.
@@ -696,34 +698,46 @@ python3 -m http.server 8000
 
 ### 구조
 
-그린필드로 다시 작성했습니다. 4장의 멀티 라우트 IA(`/`, `/about`, `/skills`, `/projects`, `/projects/[slug]` ×2, `/github`, `/contact`, 404)는 그대로 유지하고, 각 라우트를 몰입형으로 재설계했습니다.
+그린필드로 다시 작성했습니다. 처음 재구성 시점에는 4장의 멀티 라우트 IA(`/`, `/about`, `/skills`, `/projects`, `/projects/[slug]` ×2, `/github`, `/contact`, 404)를 유지했으나, 이후 **단일 페이지로 통합**했습니다(아래 "단일 페이지 재구성" 참조).
 
-- `index.html` — 셸(고정 헤더/푸터/캔버스/커서/커튼) + 라우트별 `<template>`
+- `index.html` — 셸(고정 헤더/푸터/캔버스/커서/커튼) + `<template>`(`t-home` 한 페이지 전체 · `t-github` · `t-404`)
 - `styles.css` — 글래시 3D 뎁스 디자인 시스템. 라이트/다크(둘 다 WCAG AA 대비 검증), 한국어 타이포 오버라이드, Fraunces + Inter + JetBrains Mono(구글 폰트), 한국어는 Noto Serif/Sans KR 지연 로드
-- `assets/js/app.js` — 코어: History API 라우터, 클라이언트 i18n(en/ko), 테마 토글(View Transitions 원형 확산), GitHub 공개 API(`localStorage` 30분 캐시 + fallback), 라우트별 `<title>`/description/canonical/og
+- `assets/js/app.js` — 코어: History API 라우터(`/`, `/github`) + 인페이지 앵커 스크롤 + 레거시 URL 리다이렉트, 클라이언트 i18n(en/ko), 테마 토글(View Transitions 원형 확산), GitHub 공개 API(`localStorage` 30분 캐시 + fallback), 라우트별 `<title>`/description/canonical/og, IntersectionObserver 스크롤스파이
 - `assets/js/motion.js` — GSAP 3.13 모션 레이어
 - `vendor/` — GSAP 3.13 + ScrollTrigger + ScrollSmoother + SplitText + CustomEase (self-hosted, 2025년부터 전 플러그인 무료)
 - `build.sh` — `vendor/*` + `app.js` + `motion.js` → **단일 `script.js`** 로 연결(concatenation만, 번들러/미니파이어 없음). 각 파일이 독립 IIFE라 안전.
+
+### 단일 페이지 재구성 (2026-08-28, 같은 날 후속 작업)
+
+사용자 요청으로 "네브바가 페이지를 쪼개는" 멀티 라우트를 **한 페이지 스크롤**로 통합했습니다. GitHub만 별도 라우트로 남겼습니다.
+
+- **라우트**: `/` 와 `/github` 두 개 + 404. `ROUTES` 배열이 이 둘만 가짐.
+- **`/` (t-home)**: Hero → 탐색 인덱스(섹션 바로가기 카드 + GitHub 링크) → `#about` → `#skills` → `#projects`(카드 2개 + 케이스 스터디 2건을 `.case--inline` 블록으로 인라인) → `#contact`. 각 섹션은 `<section id="…">`.
+- **네브바 / 푸터 / 탐색 카드**: About·Skills·Projects·Contact 는 인페이지 앵커(`href="/#about"` …), GitHub 는 `data-route`. 모바일 메뉴 동일.
+- **레거시 URL**: `app.js`의 `resolve()` 가 `/about` `/skills` `/projects` `/projects/*` `/contact` 를 `/` + `pendingSection` 스크롤로 매핑. `boot()` 가 진입 시 URL 을 `/#섹션` 으로 `replaceState`. 직접 링크·검색엔진 인덱스가 깨지지 않음.
+- **스크롤 이동**: `scrollToSection()` — ScrollSmoother 활성 시 `__smoother.scrollTo`, 아니면 `window.scrollTo`. 항상 `--header-h` 만큼 오프셋. `#top` 은 종전대로 `motion.js` 담당.
+- **활성 표시**: `IntersectionObserver`(`setupSpy`) 로 뷰포트 중앙 섹션을 네브 링크 `aria-current="page"` 에 반영. GSAP 유무와 무관하게 동작.
+- **`vercel.json` / `sitemap.xml`**: 라우트 목록을 `/` + `/github` 기준으로 정리(레거시 경로는 `index.html` 로 rewrite 하여 JS 리다이렉트가 돌게 유지).
 
 ### 모션 (motion.js)
 
 - **ScrollSmoother** 스무스 스크롤 셸(`#smooth-wrapper > #smooth-content`, 고정 UI는 셸 밖)
 - **SplitText** 헤딩 단어 단위 마스크 등장(`[data-split]`), Hero는 즉시 재생, 나머지는 ScrollTrigger
-- **ScrollTrigger** `[data-anim]` 리빌(fade/left/right/scale), `/skills`는 가로 스크롤 핀 씬
+- **ScrollTrigger** `[data-anim]` 리빌(fade/left/right/scale), `#skills` 섹션은 가로 스크롤 핀 씬
 - 마우스 추종 **커스텀 커서**, **3D 틸트 + 유리 sheen**(`[data-tilt]`), **마그네틱 버튼**(`[data-magnetic]`)
 - 배경 **캔버스 깊이 파티클** 필드(포인터/스크롤 시차)
-- 라우트 전환 **커튼 와이프**, 스크롤 진행 레일, 스킬 마퀴(스크롤 속도 연동)
+- 라우트 전환 **커튼 와이프**(이제 `/` ↔ `/github` 사이에서만), 스크롤 진행 레일, 스킬 마퀴(스크롤 속도 연동)
 
 ### 안전장치 (progressive enhancement 유지)
 
 - GSAP 미로드 또는 `prefers-reduced-motion` → `motion.js`가 조기 종료, `.motion-ready` 미적용 → **모든 콘텐츠가 그냥 보임**
-- `[data-anim]` 리빌은 CSS가 소유(`.motion-ready`가 있을 때만 숨김) — GSAP이 멈춰도 워치독(3.5s)이 전체 표시
+- `[data-anim]` 리빌은 CSS가 소유(`.motion-ready`가 있을 때만 숨김) — GSAP이 멈춰도 워치독(3.5s, `bailToVisible`)이 전체 표시. 워치독은 `[data-anim]`에 남은 `g.from()` 인라인 스타일(`immediateRender`로 찍힌 `opacity`/`transform`)도 `clearProps`로 제거하고, `__pageTransition`은 bail 상태면 커튼 없이 즉시 전환해 백그라운드 로드에서 네비게이션이 멈추지 않음
 - `?motion=off` 쿼리로 모션 완전 비활성(QA용)
 - ScrollTrigger 미로드 시에도 정적으로 안전하게 동작
 
 ### 배포
 
-- 참조 파일: `index.html`, `styles.css`, `script.js`, `favicon.svg`, `robots.txt`, `sitemap.xml`, `404.html`, `og-image.png` — **모두 라즈베리파이 `server.js`의 `publicFiles` 화이트리스트에 이미 존재** → 파이 쪽은 파일 복사만, `server.js` 수정·서비스 재시작 불필요
+- 참조 파일: `index.html`, `styles.css`, `script.js`, `favicon.svg`, `robots.txt`, `sitemap.xml`, `404.html`, `og-image.png` — **모두 라즈베리파이 `server.js`의 `publicFiles` 화이트리스트에 이미 존재** → 파이 쪽은 파일 복사만, `server.js` 수정·서비스 재시작 불필요. `server.js`의 확장자 없는 경로 → `index.html` fallback 이 단일 페이지 + `/github` 라우팅을 그대로 처리
 - 도메인: `sang9.kro.kr` (canonical/og/sitemap 모두 갱신)
 - `assets/`·`vendor/`는 소스로만 커밋(빌드 입력). `index.html`은 `/script.js` 하나만 로드.
 - 코드 변경 시: `assets/js/*.js` 또는 `vendor/*` 수정 → `./build.sh` → 커밋

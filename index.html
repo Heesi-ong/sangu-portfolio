@@ -69,11 +69,11 @@
     <div class="shell--wide shell nav-row">
       <a class="brand" href="/" data-route aria-label="SangU — home">SangU<b>.</b></a>
       <nav class="nav-links" aria-label="Primary" id="primary-nav">
-        <a href="/about" data-route data-i18n="nav.about">About</a>
-        <a href="/skills" data-route data-i18n="nav.skills">Skills</a>
-        <a href="/projects" data-route data-i18n="nav.projects">Projects</a>
+        <a href="/#about" data-i18n="nav.about">About</a>
+        <a href="/#skills" data-i18n="nav.skills">Skills</a>
+        <a href="/#projects" data-i18n="nav.projects">Projects</a>
         <a href="/github" data-route data-i18n="nav.github">GitHub</a>
-        <a href="/contact" data-route data-i18n="nav.contact">Contact</a>
+        <a href="/#contact" data-i18n="nav.contact">Contact</a>
       </nav>
       <div class="header-tools">
         <button class="icon-btn lang-btn" id="lang-btn" type="button">
@@ -91,11 +91,11 @@
   </header>
 
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
-    <a href="/about" data-route data-i18n="nav.about" style="--i:0">About</a>
-    <a href="/skills" data-route data-i18n="nav.skills" style="--i:1">Skills</a>
-    <a href="/projects" data-route data-i18n="nav.projects" style="--i:2">Projects</a>
+    <a href="/#about" data-i18n="nav.about" style="--i:0">About</a>
+    <a href="/#skills" data-i18n="nav.skills" style="--i:1">Skills</a>
+    <a href="/#projects" data-i18n="nav.projects" style="--i:2">Projects</a>
     <a href="/github" data-route data-i18n="nav.github" style="--i:3">GitHub</a>
-    <a href="/contact" data-route data-i18n="nav.contact" style="--i:4">Contact</a>
+    <a href="/#contact" data-i18n="nav.contact" style="--i:4">Contact</a>
   </nav>
 
   <main id="main" tabindex="-1"></main>
@@ -104,7 +104,7 @@
     <div class="shell footer-row">
       <span data-i18n-html="footer.built">© <span id="year"></span> SangU · Hand-built with HTML, CSS, JavaScript &amp; GSAP.</span>
       <div class="footer-links">
-        <a href="/contact" data-route data-i18n="footer.contact">Contact</a>
+        <a href="/#contact" data-i18n="footer.contact">Contact</a>
         <a href="https://github.com/Heesi-ong" target="_blank" rel="noopener noreferrer" data-i18n="footer.github">GitHub</a>
         <a href="#top" data-i18n="footer.top">Top ↑</a>
       </div>
@@ -112,6 +112,8 @@
   </footer>
 
   <!-- ================= route templates ================= -->
+  <!-- The home route is one continuous page. The navbar scrolls between its
+       sections; only GitHub is a separate route. -->
   <template id="t-home">
     <section class="hero" id="top">
       <div class="shell--wide shell hero-grid">
@@ -120,8 +122,8 @@
           <h1 class="display" data-split data-i18n-html="hero.title">Ideas, built to be&nbsp;<em>relied on</em>.</h1>
           <p class="lede" data-anim="fade" data-i18n="hero.lede">I design and build web applications end to end — clear interfaces, dependable APIs, data models that hold up.</p>
           <div class="hero-actions" data-anim="fade">
-            <a class="btn btn--primary" href="/projects" data-route data-magnetic><span data-i18n="hero.cta1">See the work</span><span class="arrow" aria-hidden="true">↓</span></a>
-            <a class="btn btn--ghost" href="https://github.com/Heesi-ong" target="_blank" rel="noopener noreferrer" data-magnetic><span data-i18n="hero.cta2">GitHub</span><span class="arrow" aria-hidden="true">↗</span></a>
+            <a class="btn btn--primary" href="/#projects" data-magnetic><span data-i18n="hero.cta1">See the work</span><span class="arrow" aria-hidden="true">↓</span></a>
+            <a class="btn btn--ghost" href="/github" data-route data-magnetic><span data-i18n="hero.cta2">GitHub</span><span class="arrow" aria-hidden="true">→</span></a>
           </div>
         </div>
         <aside class="hero-card glass" data-anim="right" data-tilt>
@@ -145,41 +147,41 @@
       </div>
     </div>
 
-    <section class="section">
+    <section class="section section--tight">
       <div class="shell--wide shell">
         <div class="sec-head sec-head--split">
           <div class="stack-sm">
             <p class="eyebrow" data-i18n="explore.eyebrow">Explore</p>
             <h2 class="h-xl" data-split data-i18n="explore.title">Five ways in.</h2>
           </div>
-          <p class="lede" data-anim="fade" data-i18n="explore.lede">The home page is a hub. Each route goes deep on one part of the story — start wherever you want.</p>
+          <p class="lede" data-anim="fade" data-i18n="explore.lede">The whole story lives on one page — jump straight to the part you want. GitHub opens on its own.</p>
         </div>
         <div class="explore">
-          <a class="explore-card glass" data-route href="/about" data-tilt data-anim="fade">
+          <a class="explore-card glass" href="/#about" data-tilt data-anim="fade">
             <span class="idx">01</span>
             <h3 data-i18n="nav.about">About</h3>
             <p data-i18n="explore.about">How I decide what to build and how to build it.</p>
             <span class="go" data-i18n="explore.go">Open<span class="arrow" aria-hidden="true">→</span></span>
           </a>
-          <a class="explore-card glass" data-route href="/skills" data-tilt data-anim="fade">
+          <a class="explore-card glass" href="/#skills" data-tilt data-anim="fade">
             <span class="idx">02</span>
             <h3 data-i18n="nav.skills">Skills</h3>
             <p data-i18n="explore.skills">Tools grouped by the job they do — not a wall of logos.</p>
             <span class="go" data-i18n="explore.go">Open<span class="arrow" aria-hidden="true">→</span></span>
           </a>
-          <a class="explore-card glass" data-route href="/projects" data-tilt data-anim="fade">
+          <a class="explore-card glass" href="/#projects" data-tilt data-anim="fade">
             <span class="idx">03</span>
             <h3 data-i18n="nav.projects">Projects</h3>
             <p data-i18n="explore.projects">Case studies: the problem, the decisions, the trade-offs.</p>
             <span class="go" data-i18n="explore.go">Open<span class="arrow" aria-hidden="true">→</span></span>
           </a>
-          <a class="explore-card glass" data-route href="/github" data-tilt data-anim="fade">
+          <a class="explore-card glass" href="/github" data-route data-tilt data-anim="fade">
             <span class="idx">04</span>
             <h3 data-i18n="nav.github">GitHub</h3>
             <p data-i18n="explore.github">Live public profile and recent repositories.</p>
             <span class="go" data-i18n="explore.go">Open<span class="arrow" aria-hidden="true">→</span></span>
           </a>
-          <a class="explore-card glass" data-route href="/contact" data-tilt data-anim="fade">
+          <a class="explore-card glass" href="/#contact" data-tilt data-anim="fade">
             <span class="idx">05</span>
             <h3 data-i18n="nav.contact">Contact</h3>
             <p data-i18n="explore.contact">Tell me what problem you are trying to solve.</p>
@@ -189,26 +191,13 @@
       </div>
     </section>
 
-    <section class="section section--tight">
-      <div class="shell--wide shell">
-        <div class="sec-head">
-          <p class="eyebrow" data-i18n="projects.eyebrow">Selected work</p>
-          <h2 class="h-xl" data-split data-i18n="home.projTitle">Two things running in the world.</h2>
-        </div>
-        <div class="project-list" id="home-projects"></div>
-        <p class="mt-l" data-anim="fade"><a class="project-link" href="/projects" data-route><span data-i18n="home.allProjects">All projects</span><span class="arrow" aria-hidden="true">→</span></a></p>
-      </div>
-    </section>
-  </template>
-
-  <template id="t-about">
-    <section class="section" id="top">
+    <section class="section" id="about">
       <div class="shell--wide shell">
         <div class="sec-head"><p class="eyebrow" data-i18n="about.eyebrow">01 — About</p></div>
         <div class="about-grid">
           <div class="about-figure glass" data-tilt data-anim="left" id="about-art-slot"></div>
           <div class="about-copy">
-            <h1 class="h-xl" data-split data-i18n="about.lead">I care more about solving the right problem than reaching for the newest tool.</h1>
+            <h2 class="h-xl" data-split data-i18n="about.lead">I care more about solving the right problem than reaching for the newest tool.</h2>
             <p data-anim="fade" data-i18n="about.p1">I start from what a user is actually struggling with, then pick the simplest maintainable way through it. The goal is code the next developer can read without a walkthrough.</p>
             <p data-anim="fade" data-i18n="about.p2">Frontend is React and TypeScript; backend is Django with PostgreSQL. Right now I am extending into realtime collaboration with WebSockets, Django Channels, and Redis.</p>
             <div class="principles">
@@ -220,16 +209,13 @@
         </div>
       </div>
     </section>
-    <div class="shell" data-pager data-prev="/" data-next="/skills"></div>
-  </template>
 
-  <template id="t-skills">
-    <section class="section" id="top">
+    <section class="section section--tight" id="skills">
       <div class="shell--wide shell">
         <div class="sec-head sec-head--split">
           <div class="stack-sm">
             <p class="eyebrow" data-i18n="skills.eyebrow">02 — Skills</p>
-            <h1 class="h-xl" data-split data-i18n="skills.title">Tools chosen for the problem.</h1>
+            <h2 class="h-xl" data-split data-i18n="skills.title">Tools chosen for the problem.</h2>
           </div>
           <p class="lede" data-anim="fade" data-i18n="skills.lede">Grouped by the role each one plays. Scroll sideways.</p>
         </div>
@@ -238,23 +224,66 @@
         <div class="skills-track" id="skills-track"></div>
       </div>
     </section>
-    <div class="shell" data-pager data-prev="/about" data-next="/projects"></div>
-  </template>
 
-  <template id="t-projects">
-    <section class="section" id="top">
+    <section class="section" id="projects">
       <div class="shell--wide shell">
         <div class="sec-head sec-head--split">
           <div class="stack-sm">
             <p class="eyebrow" data-i18n="projects.eyebrow">03 — Selected work</p>
-            <h1 class="h-xl" data-split data-i18n="projects.title">Problems, decisions, outcomes.</h1>
+            <h2 class="h-xl" data-split data-i18n="projects.title">Problems, decisions, outcomes.</h2>
           </div>
           <p class="lede" data-anim="fade" data-i18n="projects.lede">Each project is written up as a case study, not a feature list.</p>
         </div>
-        <div class="project-list" id="all-projects"></div>
+        <div class="project-list" id="home-projects"></div>
+      </div>
+
+      <div class="shell--narrow shell case case--inline" id="project-community">
+        <p class="eyebrow" data-i18n="community.eyebrow">Case study · In development</p>
+        <h3 class="case-title" data-split data-i18n="projects.p1.title">Review-based content community</h3>
+        <p class="case-summary" data-anim="fade" data-i18n="community.summary">A full-stack community where people review books, films, and series, find recommendations through shared taste, and talk about them in real time.</p>
+        <div class="case-hero glass" data-anim="scale" id="community-art-slot"></div>
+        <div class="case-facts glass" data-anim="fade">
+          <div class="case-fact"><span data-i18n="case.role">Role</span><strong data-i18n="case.roleVal">Full-Stack Developer</strong></div>
+          <div class="case-fact"><span data-i18n="case.stack">Stack</span><strong>Django · React · PostgreSQL</strong></div>
+          <div class="case-fact"><span data-i18n="case.status">Status</span><strong data-i18n="projects.p1.status">In development</strong></div>
+          <div class="case-fact"><span data-i18n="case.focus">Focus</span><strong data-i18n="community.focusVal">Discovery · Realtime</strong></div>
+        </div>
+        <div class="case-section" data-anim="fade"><h4 data-i18n="community.problemH">The problem</h4><p data-i18n="community.problemP">Ratings alone do not explain why someone liked a work, and broad recommendation systems ignore the context behind personal taste.</p></div>
+        <div class="case-section" data-anim="fade"><h4 data-i18n="community.approachH">The approach</h4><p data-i18n="community.approachP">Reviews are the primary signal. Structured ratings are tied to written context, and discovery is not separated from discussion.</p></div>
+        <div class="case-section" data-anim="fade"><h4 data-i18n="community.techH">Technical direction</h4><p data-i18n="community.techP">Django and PostgreSQL own the domain model and API. React delivers browsing; Django Channels and Redis are being evaluated for connection state and live chat.</p></div>
+        <div class="case-section" data-anim="fade"><h4 data-i18n="community.tradeH">Current trade-off</h4><p data-i18n="community.tradeP">A reliable review and discovery flow ships first. Realtime features land only once their failure and reconnection states are defined.</p></div>
+      </div>
+
+      <div class="shell--narrow shell case case--inline" id="project-cloud">
+        <p class="eyebrow" data-i18n="cloud.eyebrow">Case study · Live service</p>
+        <h3 class="case-title" data-split data-i18n="projects.p2.title">SangU Cloud</h3>
+        <p class="case-summary" data-anim="fade" data-i18n="cloud.summary">A private cloud file manager running on a Raspberry Pi, reachable only from trusted devices on a Tailscale tailnet.</p>
+        <div class="case-hero glass" data-anim="scale" id="cloud-art-slot"></div>
+        <div class="case-facts glass" data-anim="fade">
+          <div class="case-fact"><span data-i18n="case.role">Role</span><strong data-i18n="case.roleVal">Full-Stack Developer</strong></div>
+          <div class="case-fact"><span data-i18n="case.stack">Stack</span><strong>Node.js · nginx · Raspberry Pi</strong></div>
+          <div class="case-fact"><span data-i18n="case.status">Status</span><strong data-i18n="projects.p2.status">Live</strong></div>
+          <div class="case-fact"><span data-i18n="case.focus">Focus</span><strong data-i18n="cloud.focusVal">File ops · Deployment</strong></div>
+        </div>
+        <div class="case-section" data-anim="fade"><h4 data-i18n="cloud.problemH">The problem</h4><p data-i18n="cloud.problemP">I wanted a small cloud service on hardware I own, with files reachable from the browser, without paying a storage platform for basic personal workflows.</p></div>
+        <div class="case-section" data-anim="fade"><h4 data-i18n="cloud.approachH">The approach</h4><p data-i18n="cloud.approachP">The interface stays focused on upload, folders, preview, download, rename, delete. nginx forwards only tailnet traffic to the Node.js app; Tailscale gives encrypted access without exposing the service publicly.</p></div>
+        <div class="case-section" data-anim="fade"><h4 data-i18n="cloud.techH">Technical direction</h4><p data-i18n="cloud.techP">Node.js handles session-aware file operations, systemd keeps the service up, nginx enforces the tailnet-only route, and Tailscale provides the private network path.</p></div>
+        <div class="case-section" data-anim="fade"><h4 data-i18n="cloud.tradeH">Current trade-off</h4><p data-i18n="cloud.tradeP">Server-owned storage and private access over public-sharing convenience. Only approved tailnet devices can open the running service.</p></div>
       </div>
     </section>
-    <div class="shell" data-pager data-prev="/skills" data-next="/github"></div>
+
+    <section class="section" id="contact">
+      <div class="shell--narrow shell contact-block">
+        <p class="eyebrow" data-i18n="contact.eyebrow">05 — Contact</p>
+        <h2 class="contact-title" data-split data-i18n="contact.title">Let's build something useful.</h2>
+        <p class="lede" data-anim="fade" data-i18n="contact.lede">I am open to full-stack roles and practical web projects. Tell me what problem you are trying to solve.</p>
+        <a class="contact-mail" href="mailto:ehtkddn123@gmail.com" data-anim="fade" data-magnetic>ehtkddn123@gmail.com</a>
+        <div class="contact-actions" data-anim="fade">
+          <a class="btn btn--primary" href="mailto:ehtkddn123@gmail.com" data-magnetic><span data-i18n="contact.email">Send an email</span><span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn--ghost" href="https://github.com/Heesi-ong" target="_blank" rel="noopener noreferrer" data-magnetic><span data-i18n="contact.github">Visit GitHub</span><span class="arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
   </template>
 
   <template id="t-github">
@@ -278,71 +307,9 @@
             <ul class="repo-list" id="repo-list"><li class="gh-msg" data-i18n="github.loading">Loading recent public repositories…</li></ul>
           </section>
         </div>
+        <p class="mt-l" data-anim="fade"><a class="project-link" href="/" data-route><span class="arrow" aria-hidden="true">←</span><span data-i18n="github.backHome">Back to the main page</span></a></p>
       </div>
     </section>
-    <div class="shell" data-pager data-prev="/projects" data-next="/contact"></div>
-  </template>
-
-  <template id="t-contact">
-    <section class="section" id="top">
-      <div class="shell--narrow shell contact-block">
-        <p class="eyebrow" data-i18n="contact.eyebrow">05 — Contact</p>
-        <h1 data-split data-i18n="contact.title">Let's build something useful.</h1>
-        <p class="lede" data-anim="fade" data-i18n="contact.lede">I am open to full-stack roles and practical web projects. Tell me what problem you are trying to solve.</p>
-        <a class="contact-mail" href="mailto:ehtkddn123@gmail.com" data-anim="fade" data-magnetic>ehtkddn123@gmail.com</a>
-        <div class="contact-actions" data-anim="fade">
-          <a class="btn btn--primary" href="mailto:ehtkddn123@gmail.com" data-magnetic><span data-i18n="contact.email">Send an email</span><span class="arrow" aria-hidden="true">↗</span></a>
-          <a class="btn btn--ghost" href="https://github.com/Heesi-ong" target="_blank" rel="noopener noreferrer" data-magnetic><span data-i18n="contact.github">Visit GitHub</span><span class="arrow" aria-hidden="true">↗</span></a>
-        </div>
-      </div>
-    </section>
-    <div class="shell" data-pager data-prev="/github" data-next="/"></div>
-  </template>
-
-  <template id="t-project-community">
-    <section class="section" id="top">
-      <div class="shell--narrow shell case">
-        <a class="case-back" href="/projects" data-route>←<span data-i18n="case.back">Back to projects</span></a>
-        <p class="eyebrow" data-i18n="community.eyebrow">Case study · In development</p>
-        <h1 data-split data-i18n="projects.p1.title">Review-based content community</h1>
-        <p class="case-summary" data-anim="fade" data-i18n="community.summary">A full-stack community where people review books, films, and series, find recommendations through shared taste, and talk about them in real time.</p>
-        <div class="case-hero glass" data-anim="scale" id="community-art-slot"></div>
-        <div class="case-facts glass" data-anim="fade">
-          <div class="case-fact"><span data-i18n="case.role">Role</span><strong data-i18n="case.roleVal">Full-Stack Developer</strong></div>
-          <div class="case-fact"><span data-i18n="case.stack">Stack</span><strong>Django · React · PostgreSQL</strong></div>
-          <div class="case-fact"><span data-i18n="case.status">Status</span><strong data-i18n="projects.p1.status">In development</strong></div>
-          <div class="case-fact"><span data-i18n="case.focus">Focus</span><strong data-i18n="community.focusVal">Discovery · Realtime</strong></div>
-        </div>
-        <div class="case-section" data-anim="fade"><h3 data-i18n="community.problemH">The problem</h3><p data-i18n="community.problemP">Ratings alone do not explain why someone liked a work, and broad recommendation systems ignore the context behind personal taste.</p></div>
-        <div class="case-section" data-anim="fade"><h3 data-i18n="community.approachH">The approach</h3><p data-i18n="community.approachP">Reviews are the primary signal. Structured ratings are tied to written context, and discovery is not separated from discussion.</p></div>
-        <div class="case-section" data-anim="fade"><h3 data-i18n="community.techH">Technical direction</h3><p data-i18n="community.techP">Django and PostgreSQL own the domain model and API. React delivers browsing; Django Channels and Redis are being evaluated for connection state and live chat.</p></div>
-        <div class="case-section" data-anim="fade"><h3 data-i18n="community.tradeH">Current trade-off</h3><p data-i18n="community.tradeP">A reliable review and discovery flow ships first. Realtime features land only once their failure and reconnection states are defined.</p></div>
-      </div>
-    </section>
-    <div class="shell" data-pager data-prev="/projects" data-next="/projects/sangu-cloud"></div>
-  </template>
-
-  <template id="t-project-cloud">
-    <section class="section" id="top">
-      <div class="shell--narrow shell case">
-        <a class="case-back" href="/projects" data-route>←<span data-i18n="case.back">Back to projects</span></a>
-        <p class="eyebrow" data-i18n="cloud.eyebrow">Case study · Live service</p>
-        <h1 data-split data-i18n="projects.p2.title">SangU Cloud</h1>
-        <p class="case-summary" data-anim="fade" data-i18n="cloud.summary">A private cloud file manager running on a Raspberry Pi, reachable only from trusted devices on a Tailscale tailnet.</p>
-        <div class="case-hero glass" data-anim="scale" id="cloud-art-slot"></div>
-        <div class="case-facts glass" data-anim="fade">
-          <div class="case-fact"><span data-i18n="case.role">Role</span><strong data-i18n="case.roleVal">Full-Stack Developer</strong></div>
-          <div class="case-fact"><span data-i18n="case.stack">Stack</span><strong>Node.js · nginx · Raspberry Pi</strong></div>
-          <div class="case-fact"><span data-i18n="case.status">Status</span><strong data-i18n="projects.p2.status">Live</strong></div>
-          <div class="case-fact"><span data-i18n="case.focus">Focus</span><strong data-i18n="cloud.focusVal">File ops · Deployment</strong></div>
-        </div>
-        <div class="case-section" data-anim="fade"><h3 data-i18n="cloud.problemH">The problem</h3><p data-i18n="cloud.problemP">I wanted a small cloud service on hardware I own, with files reachable from the browser, without paying a storage platform for basic personal workflows.</p></div>
-        <div class="case-section" data-anim="fade"><h3 data-i18n="cloud.approachH">The approach</h3><p data-i18n="cloud.approachP">The interface stays focused on upload, folders, preview, download, rename, delete. nginx forwards only tailnet traffic to the Node.js app; Tailscale gives encrypted access without exposing the service publicly.</p></div>
-        <div class="case-section" data-anim="fade"><h3 data-i18n="cloud.techH">Technical direction</h3><p data-i18n="cloud.techP">Node.js handles session-aware file operations, systemd keeps the service up, nginx enforces the tailnet-only route, and Tailscale provides the private network path.</p></div>
-        <div class="case-section" data-anim="fade"><h3 data-i18n="cloud.tradeH">Current trade-off</h3><p data-i18n="cloud.tradeP">Server-owned storage and private access over public-sharing convenience. Only approved tailnet devices can open the running service.</p></div>
-      </div>
-    </section>
-    <div class="shell" data-pager data-prev="/projects/review-based-content-community" data-next="/github"></div>
   </template>
 
   <template id="t-404">

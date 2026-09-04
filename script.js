@@ -146,6 +146,7 @@
       'github.lede': 'Loaded live from the public GitHub API. The page still works if it is unavailable.',
       'github.bioFallback': 'Public projects, experiments, and learning notes.',
       'github.open': 'Open profile', 'github.recent': 'Recently updated',
+      'github.backHome': 'Back to the main page',
       'github.loading': 'Loading recent public repositories…',
       'github.repos': 'Repositories', 'github.followers': 'Followers',
       'github.noDesc': 'No description provided.', 'github.updated': 'Updated',
@@ -276,6 +277,7 @@
       'github.lede': '공개 GitHub API에서 실시간으로 불러옵니다. 불러오지 못해도 페이지는 정상 동작합니다.',
       'github.bioFallback': '공개 프로젝트, 실험, 학습 기록.',
       'github.open': '프로필 열기', 'github.recent': '최근 업데이트',
+      'github.backHome': '메인 페이지로 돌아가기',
       'github.loading': '최근 공개 저장소를 불러오는 중…',
       'github.repos': '저장소', 'github.followers': '팔로워',
       'github.noDesc': '설명이 없습니다.', 'github.updated': '업데이트',
@@ -348,16 +350,24 @@
   }
 
   /* -------------------------------------------------------------- routes --- */
+  // The site is a single scrolling page plus one dedicated GitHub route.
   var ROUTES = [
     { path: '/', tpl: 't-home', meta: 'home' },
-    { path: '/about', tpl: 't-about', meta: 'about' },
-    { path: '/skills', tpl: 't-skills', meta: 'skills' },
-    { path: '/projects', tpl: 't-projects', meta: 'projects' },
-    { path: '/projects/review-based-content-community', tpl: 't-project-community', meta: 'community' },
-    { path: '/projects/sangu-cloud', tpl: 't-project-cloud', meta: 'cloud' },
-    { path: '/github', tpl: 't-github', meta: 'github' },
-    { path: '/contact', tpl: 't-contact', meta: 'contact' }
+    { path: '/github', tpl: 't-github', meta: 'github' }
   ];
+
+  // Sections that live on the home page. Old standalone URLs redirect to the
+  // matching anchor so existing links keep working.
+  var SECTIONS = ['about', 'skills', 'projects', 'contact'];
+  var LEGACY_SECTION = {
+    '/about': 'about',
+    '/skills': 'skills',
+    '/projects': 'projects',
+    '/projects/review-based-content-community': 'projects',
+    '/projects/sangu-cloud': 'projects',
+    '/contact': 'contact'
+  };
+  var pendingSection = null;
 
   var PROJECTS = [
     {
@@ -467,24 +477,10 @@
     '</article>';
   }
 
-  function renderPager(el) {
-    var prev = el.getAttribute('data-prev'), next = el.getAttribute('data-next');
-    var label = function (path) {
-      var r = ROUTES.filter(function (x) { return x.path === path; })[0];
-      if (!r) return 'Home';
-      return r.meta === 'home' ? t('nav.home') : t('nav.' + r.meta) || t('meta.' + r.meta + '.t');
-    };
-    el.className = 'pager shell';
-    el.innerHTML =
-      '<a href="' + prev + '" data-route class="prev"><span>' + esc(t('pager.prev')) + '</span><b>' + esc(label(prev)) + '</b></a>' +
-      '<a href="' + next + '" data-route class="next"><span>' + esc(t('pager.next')) + '</span><b>' + esc(label(next)) + '</b></a>';
-  }
-
   function hydrate(route) {
-    var hp = main.querySelector('#home-projects');
-    if (hp) hp.innerHTML = PROJECTS.map(renderProjectCard).join('');
-    var ap = main.querySelector('#all-projects');
-    if (ap) ap.innerHTML = PROJECTS.map(renderProjectCard).join('');
+    main.querySelectorAll('#home-projects, #all-projects').forEach(function (el) {
+      el.innerHTML = PROJECTS.map(renderProjectCard).join('');
+    });
     var st = main.querySelector('#skills-track');
     if (st) st.innerHTML = SKILLS.map(renderSkillPanel).join('');
 
@@ -494,9 +490,45 @@
       if (s) s.innerHTML = artSVG(slots[id]);
     });
 
-    main.querySelectorAll('[data-pager]').forEach(renderPager);
-
     if (route.meta === 'github') loadGitHub();
+    setupSpy(route);
+  }
+
+  /* ------------------------------------------------------- section spy --- */
+  // On the home page, reflect the section in view onto the nav links.
+  var spy = null;
+  function markNav(hash) {
+    document.querySelectorAll('#primary-nav a, #mobile-nav a').forEach(function (a) {
+      if (a.getAttribute('href') === hash) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+  }
+  function setupSpy(route) {
+    if (spy) { spy.disconnect(); spy = null; }
+    if (!route || route.path !== '/' || !('IntersectionObserver' in window)) return;
+    var seen = main.querySelectorAll('#' + SECTIONS.join(', #'));
+    if (!seen.length) return;
+    spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) markNav('/#' + en.target.id);
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    seen.forEach(function (s) { spy.observe(s); });
+  }
+
+  function scrollToSection(id, instant) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (window.__smoother) {
+      window.__smoother.scrollTo(el, !instant, 'top ' + (parseInt(getHeader(), 10) + 24) + 'px');
+    } else {
+      var y = el.getBoundingClientRect().top + window.scrollY - (parseInt(getHeader(), 10) + 24);
+      window.scrollTo({ top: y, behavior: instant ? 'auto' : 'smooth' });
+    }
+    markNav('/#' + id);
+  }
+  function getHeader() {
+    return getComputedStyle(document.documentElement).getPropertyValue('--header-h') || '74px';
   }
 
   function setMeta(route) {
@@ -518,9 +550,11 @@
       var p;
       try { p = new URL(a.getAttribute('href'), location.origin).pathname.replace(/\/+$/, '') || '/'; }
       catch (e) { p = a.getAttribute('href'); }
-      if (p === route.path) a.setAttribute('aria-current', 'page');
+      // The brand ("/") is not a nav destination — only flag real route links.
+      if (p === route.path && route.path !== '/') a.setAttribute('aria-current', 'page');
       else a.removeAttribute('aria-current');
     });
+    if (route.path !== '/') markNav('');
   }
 
   function matchRoute(pathname) {
@@ -544,26 +578,52 @@
     }));
     first = false;
 
-    if (!window.__smoother) window.scrollTo(0, 0);
+    var target = pendingSection;
+    pendingSection = null;
+    if (target && !notFound && route.path === '/') {
+      // Let motion.js rebuild the smooth-scroll shell + triggers, then jump.
+      setTimeout(function () {
+        requestAnimationFrame(function () { scrollToSection(target, true); });
+      }, 120);
+    } else if (!window.__smoother) {
+      window.scrollTo(0, 0);
+    }
     main.focus({ preventScroll: true });
   }
 
+  // path may carry a "#section" suffix; resolve legacy standalone URLs too.
+  function resolve(path) {
+    var clean = (path.split('#')[0] || '').replace(/\/+$/, '') || '/';
+    var hash = path.split('#')[1] || '';
+    if (LEGACY_SECTION[clean]) return { route: ROUTES[0], section: LEGACY_SECTION[clean] };
+    var route = matchRoute(clean);
+    if (route && route.path === '/' && SECTIONS.indexOf(hash) !== -1) return { route: route, section: hash };
+    return { route: route, section: '' };
+  }
+
   function navigate(path, replace) {
-    var route = matchRoute(path);
-    if (!route) {
+    var r = resolve(path);
+    if (!r.route) {
       if (path.indexOf('/') !== 0) { location.href = path; return; }
       history[replace ? 'replaceState' : 'pushState']({}, '', path);
       paint({ path: path, meta: 'nf', tpl: 't-404' }, true);
       return;
     }
-    if (current && current.path === route.path) return;
+    var route = r.route;
+    if (current && current.path === route.path) {
+      if (r.section) { history.replaceState({}, '', '/#' + r.section); scrollToSection(r.section); }
+      return;
+    }
+    pendingSection = r.section || null;
     var run = function () { paint(route); };
-    history[replace ? 'replaceState' : 'pushState']({}, '', route.path);
+    history[replace ? 'replaceState' : 'pushState']({}, '',
+      route.path + (r.section ? '#' + r.section : ''));
 
     if (window.__pageTransition) window.__pageTransition(run);
     else run();
   }
 
+  // Real route links (brand, GitHub, "back to start").
   document.addEventListener('click', function (e) {
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     var a = e.target.closest('a[data-route]');
@@ -575,14 +635,34 @@
     navigate(href);
   });
 
-  window.addEventListener('popstate', function () {
-    var route = matchRoute(location.pathname);
-    if (route) {
-      current = null;
-      if (window.__pageTransition) window.__pageTransition(function () { paint(route); });
-      else paint(route);
+  // In-page anchor links (nav + explore cards + footer). "#top" is left to motion.js.
+  document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest('a[href]');
+    if (!a || a.hasAttribute('data-route')) return;
+    var href = a.getAttribute('href');
+    var hi = href.indexOf('#');
+    if (hi === -1) return;
+    var id = href.slice(hi + 1);
+    if (!id || id === 'top' || SECTIONS.indexOf(id) === -1) return;
+    e.preventDefault();
+    closeMenu();
+    if (current && current.path === '/') {
+      history.replaceState({}, '', '/#' + id);
+      scrollToSection(id);
     } else {
-      current = null;
+      navigate('/#' + id);
+    }
+  });
+
+  window.addEventListener('popstate', function () {
+    var r = resolve(location.pathname + location.hash);
+    current = null;
+    if (r.route) {
+      pendingSection = r.section || null;
+      if (window.__pageTransition) window.__pageTransition(function () { paint(r.route); });
+      else paint(r.route);
+    } else {
       paint({ path: location.pathname, meta: 'nf', tpl: 't-404' }, true);
     }
   });
@@ -764,9 +844,17 @@
   window.__app = { navigate: navigate, t: t, getLang: function () { return lang; } };
 
   function boot() {
-    var startRoute = matchRoute(location.pathname);
-    if (startRoute) paint(startRoute);
-    else paint({ path: location.pathname, meta: 'nf', tpl: 't-404' }, true);
+    var r = resolve(location.pathname + location.hash);
+    if (r.route) {
+      // Normalise legacy standalone URLs to the single-page anchor.
+      if (r.route.path === '/' && location.pathname !== '/') {
+        history.replaceState({}, '', '/' + (r.section ? '#' + r.section : ''));
+      }
+      pendingSection = r.section || null;
+      paint(r.route);
+    } else {
+      paint({ path: location.pathname, meta: 'nf', tpl: 't-404' }, true);
+    }
   }
   // Deferred scripts run at readyState "interactive" (before DOMContentLoaded),
   // so wait for DOMContentLoaded — by then motion.js (also deferred) has run and
@@ -829,7 +917,13 @@
     if (bailed) return;
     bailed = true;
     document.documentElement.classList.remove('motion-ready');
-    document.querySelectorAll('[data-anim]').forEach(function (el) { el.classList.add('is-inview'); });
+    document.querySelectorAll('[data-anim]').forEach(function (el) {
+      el.classList.add('is-inview');
+      // A g.from() may have already stamped inline opacity/transform via
+      // immediateRender before its trigger ever fired — clear it or the element
+      // stays invisible for good.
+      g.set(el, { clearProps: 'opacity,transform,translate,rotate,scale,x,y' });
+    });
     document.querySelectorAll('[data-split]').forEach(function (el) {
       el.style.opacity = 1;
       g.set(el.querySelectorAll('div, span'), { clearProps: 'transform,opacity' });
@@ -1124,7 +1218,9 @@
   /* ---------------------------------------------- page transition --- */
   var curtain = document.getElementById('curtain');
   window.__pageTransition = function (swap) {
-    if (!curtain) { swap(); return; }
+    // No curtain, or motion already bailed (frozen ticker) — swap straight away
+    // so navigation never stalls waiting on a timeline that will not tick.
+    if (!curtain || bailed) { swap(); return; }
     if (smoother) smoother.paused(true);
     g.timeline()
       .set(curtain, { scaleY: 0, transformOrigin: 'bottom' })

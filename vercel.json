@@ -1,11 +1,10 @@
 {
   "rewrites": [
+    { "source": "/github", "destination": "/index.html" },
     { "source": "/about", "destination": "/index.html" },
     { "source": "/skills", "destination": "/index.html" },
     { "source": "/projects", "destination": "/index.html" },
-    { "source": "/projects/review-based-content-community", "destination": "/index.html" },
-    { "source": "/projects/sangu-cloud", "destination": "/index.html" },
-    { "source": "/github", "destination": "/index.html" },
+    { "source": "/projects/(.*)", "destination": "/index.html" },
     { "source": "/contact", "destination": "/index.html" }
   ]
 }
