@@ -270,6 +270,23 @@
         <div class="case-section" data-anim="fade"><h4 data-i18n="cloud.techH">Technical direction</h4><p data-i18n="cloud.techP">Node.js handles session-aware file operations, systemd keeps the service up, nginx enforces the tailnet-only route, and Tailscale provides the private network path.</p></div>
         <div class="case-section" data-anim="fade"><h4 data-i18n="cloud.tradeH">Current trade-off</h4><p data-i18n="cloud.tradeP">Server-owned storage and private access over public-sharing convenience. Only approved tailnet devices can open the running service.</p></div>
       </div>
+
+      <div class="shell--narrow shell case case--inline" id="project-teamflow">
+        <p class="eyebrow" data-i18n="teamflow.eyebrow">Case study · Live service</p>
+        <h3 class="case-title" data-split data-i18n="projects.p3.title">TeamFlow</h3>
+        <p class="case-summary" data-anim="fade" data-i18n="teamflow.summary">A team collaboration platform where Kanban tasks, comments, chat, and file uploads share one RBAC-backed workspace, with real-time notifications over SSE and chat over WebSocket.</p>
+        <div class="case-hero glass" data-anim="scale" id="teamflow-art-slot"></div>
+        <div class="case-facts glass" data-anim="fade">
+          <div class="case-fact"><span data-i18n="case.role">Role</span><strong data-i18n="case.roleVal">Full-Stack Developer</strong></div>
+          <div class="case-fact"><span data-i18n="case.stack">Stack</span><strong>Spring Boot · React · PostgreSQL</strong></div>
+          <div class="case-fact"><span data-i18n="case.status">Status</span><strong data-i18n="projects.p3.status">Live</strong></div>
+          <div class="case-fact"><span data-i18n="case.focus">Focus</span><strong data-i18n="teamflow.focusVal">Task management · Realtime</strong></div>
+        </div>
+        <div class="case-section" data-anim="fade"><h4 data-i18n="teamflow.problemH">The problem</h4><p data-i18n="teamflow.problemP">Team tools for tasks, chat, and files live in different apps, so context gets lost and there is no single place to see who changed what.</p></div>
+        <div class="case-section" data-anim="fade"><h4 data-i18n="teamflow.approachH">The approach</h4><p data-i18n="teamflow.approachP">One Spring Boot service owns projects, tasks, comments, and activity history behind RBAC, with a Kanban board as the shared surface everyone works from.</p></div>
+        <div class="case-section" data-anim="fade"><h4 data-i18n="teamflow.techH">Technical direction</h4><p data-i18n="teamflow.techP">Spring Boot and PostgreSQL hold the domain model behind JWT auth; SSE pushes notifications and WebSocket/STOMP drives chat, both backed by Redis for pub/sub and caching.</p></div>
+        <div class="case-section" data-anim="fade"><h4 data-i18n="teamflow.tradeH">Current trade-off</h4><p data-i18n="teamflow.tradeP">A single deployable stays easier to operate than splitting services early. Free-tier hosting (Render + Neon + Upstash) means a cold start after 15 minutes of inactivity.</p></div>
+      </div>
     </section>
 
     <section class="section" id="contact">

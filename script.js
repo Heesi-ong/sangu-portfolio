@@ -127,6 +127,9 @@
       'projects.p2.title': 'SangU Cloud',
       'projects.p2.meta': 'Cloud service', 'projects.p2.status': 'Live',
       'projects.p2.blurb': 'A Raspberry Pi personal cloud for browser-based upload, preview, download, rename, and admin-only deletion.',
+      'projects.p3.title': 'TeamFlow',
+      'projects.p3.meta': 'Full-stack', 'projects.p3.status': 'Live',
+      'projects.p3.blurb': 'A team collaboration platform with Kanban boards, real-time notifications and chat, and Redis-backed dashboards — with JWT auth, automated tests, and CI/CD.',
       'projects.readCase': 'Read case study',
 
       'github.eyebrow': '04 — GitHub', 'github.title': 'Work in the open.',
@@ -170,6 +173,17 @@
       'cloud.techP': 'Node.js handles session-aware file operations, systemd keeps the service up, nginx enforces the tailnet-only route, and Tailscale provides the private network path.',
       'cloud.tradeH': 'Current trade-off',
       'cloud.tradeP': 'Server-owned storage and private access over public-sharing convenience. Only approved tailnet devices can open the running service.',
+      'teamflow.eyebrow': 'Case study · Live service',
+      'teamflow.summary': 'A team collaboration platform where Kanban tasks, comments, chat, and file uploads share one RBAC-backed workspace, with real-time notifications over SSE and chat over WebSocket.',
+      'teamflow.focusVal': 'Task management · Realtime',
+      'teamflow.problemH': 'The problem',
+      'teamflow.problemP': 'Team tools for tasks, chat, and files live in different apps, so context gets lost and there is no single place to see who changed what.',
+      'teamflow.approachH': 'The approach',
+      'teamflow.approachP': 'One Spring Boot service owns projects, tasks, comments, and activity history behind RBAC, with a Kanban board as the shared surface everyone works from.',
+      'teamflow.techH': 'Technical direction',
+      'teamflow.techP': 'Spring Boot and PostgreSQL hold the domain model behind JWT auth; SSE pushes notifications and WebSocket/STOMP drives chat, both backed by Redis for pub/sub and caching.',
+      'teamflow.tradeH': 'Current trade-off',
+      'teamflow.tradeP': 'A single deployable stays easier to operate than splitting services early. Free-tier hosting (Render + Neon + Upstash) means a cold start after 15 minutes of inactivity.',
 
       'pager.prev': 'Previous', 'pager.next': 'Next',
       'nf.title': 'This page slipped off the grid.',
@@ -191,6 +205,8 @@
       'meta.community.d': 'A full-stack community for reviewing books, films, and series with taste-based discovery and realtime conversation.',
       'meta.cloud.t': 'SangU Cloud — SangU',
       'meta.cloud.d': 'A Raspberry Pi personal cloud with browser file operations and tailnet-only private access via Tailscale.',
+      'meta.teamflow.t': 'TeamFlow — SangU',
+      'meta.teamflow.d': 'A team collaboration platform with Kanban boards, real-time notifications, chat, and RBAC — deployed on Render, Neon, and Upstash.',
       'meta.github.t': 'GitHub — SangU',
       'meta.github.d': 'SangU’s public GitHub profile and recently updated repositories.',
       'meta.contact.t': 'Contact — SangU',
@@ -258,6 +274,9 @@
       'projects.p2.title': 'SangU Cloud',
       'projects.p2.meta': '클라우드 서비스', 'projects.p2.status': '운영 중',
       'projects.p2.blurb': '브라우저 기반 업로드·미리보기·다운로드·이름변경·관리자 전용 삭제를 제공하는 라즈베리파이 개인 클라우드.',
+      'projects.p3.title': 'TeamFlow',
+      'projects.p3.meta': '풀스택', 'projects.p3.status': '운영 중',
+      'projects.p3.blurb': '칸반 보드, 실시간 알림·채팅, Redis 기반 대시보드를 제공하는 팀 협업 플랫폼 — JWT 인증, 테스트 자동화, CI/CD까지 갖췄습니다.',
       'projects.readCase': '케이스 스터디 보기',
 
       'github.eyebrow': '04 — GitHub', 'github.title': '공개적으로 하는 작업.',
@@ -301,6 +320,17 @@
       'cloud.techP': 'Node.js가 세션 인식 파일 작업을 처리하고, systemd가 서비스를 유지하며, nginx가 테일넷 전용 경로를 강제하고, Tailscale이 사설 네트워크 경로를 제공합니다.',
       'cloud.tradeH': '현재의 트레이드오프',
       'cloud.tradeP': '공개 공유의 편의보다 서버 소유 저장소와 사설 접근을 택했습니다. 승인된 테일넷 기기만 실행 중인 서비스를 열 수 있습니다.',
+      'teamflow.eyebrow': '케이스 스터디 · 운영 중',
+      'teamflow.summary': 'Kanban Task, 댓글, 채팅, 파일 업로드가 하나의 RBAC 기반 워크스페이스를 공유하는 팀 협업 플랫폼으로, SSE 실시간 알림과 WebSocket 채팅을 제공합니다.',
+      'teamflow.focusVal': 'Task 관리 · 실시간',
+      'teamflow.problemH': '문제',
+      'teamflow.problemP': 'Task, 채팅, 파일이 서로 다른 도구에 흩어져 있어 맥락이 끊기고, 누가 무엇을 바꿨는지 한눈에 볼 곳이 없었습니다.',
+      'teamflow.approachH': '접근 방식',
+      'teamflow.approachP': 'Spring Boot 단일 서비스가 프로젝트·Task·댓글·활동 이력을 RBAC 뒤에서 관리하고, Kanban 보드를 모두가 함께 보는 화면으로 둡니다.',
+      'teamflow.techH': '기술적 방향',
+      'teamflow.techP': 'Spring Boot와 PostgreSQL이 JWT 인증 뒤에서 도메인 모델을 담당하고, SSE로 알림을, WebSocket/STOMP로 채팅을 전달하며 둘 다 Redis의 Pub/Sub과 캐시를 사용합니다.',
+      'teamflow.tradeH': '현재의 트레이드오프',
+      'teamflow.tradeP': '서비스를 일찍 쪼개는 것보다 단일 배포 단위를 유지하는 쪽을 택했습니다. 무료 호스팅(Render + Neon + Upstash)을 쓰는 만큼 15분 미사용 시 콜드 스타트가 있습니다.',
 
       'pager.prev': '이전', 'pager.next': '다음',
       'nf.title': '이 페이지는 그리드에서 벗어났습니다.',
@@ -322,6 +352,8 @@
       'meta.community.d': '취향 기반 발견과 실시간 대화를 갖춘, 책·영화·시리즈 리뷰 풀스택 커뮤니티.',
       'meta.cloud.t': 'SangU Cloud — SangU',
       'meta.cloud.d': '브라우저 파일 작업과 Tailscale 테일넷 전용 사설 접근을 제공하는 라즈베리파이 개인 클라우드.',
+      'meta.teamflow.t': 'TeamFlow — SangU',
+      'meta.teamflow.d': 'Kanban 보드, 실시간 알림·채팅, RBAC를 갖춘 팀 협업 플랫폼 — Render·Neon·Upstash에 배포.',
       'meta.github.t': 'GitHub — SangU',
       'meta.github.d': 'SangU의 공개 GitHub 프로필과 최근 업데이트된 저장소입니다.',
       'meta.contact.t': '문의 — SangU',
@@ -352,6 +384,7 @@
     '/projects': 'projects',
     '/projects/review-based-content-community': 'projects',
     '/projects/sangu-cloud': 'projects',
+    '/projects/teamflow': 'projects',
     '/contact': 'contact'
   };
   var pendingSection = null;
@@ -368,6 +401,12 @@
       titleKey: 'projects.p2.title', metaKey: 'projects.p2.meta',
       statusKey: 'projects.p2.status', blurbKey: 'projects.p2.blurb',
       tags: ['Node.js', 'nginx', 'Raspberry Pi', 'Tailscale'], live: true
+    },
+    {
+      slug: '/projects/teamflow', art: 'kanban',
+      titleKey: 'projects.p3.title', metaKey: 'projects.p3.meta',
+      statusKey: 'projects.p3.status', blurbKey: 'projects.p3.blurb',
+      tags: ['Spring Boot', 'React', 'WebSocket', 'Redis'], live: true
     }
   ];
 
@@ -407,6 +446,22 @@
         '<rect x="384" y="192" width="160" height="8" rx="4" fill="' + ln + '"/>' +
         '<rect x="384" y="212" width="130" height="8" rx="4" fill="' + ln + '"/>' +
         '<path d="M290 130c40 20 40 40 60 50" stroke="' + a + '" stroke-width="1.5" stroke-dasharray="4 5"/>' +
+        '</svg>';
+    }
+    if (kind === 'kanban') {
+      return '<svg viewBox="0 0 640 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">' +
+        '<rect x="60" y="50" width="150" height="260" rx="14" stroke="' + ln + '" stroke-width="1.5"/>' +
+        '<rect x="245" y="50" width="150" height="260" rx="14" stroke="' + a + '" stroke-width="2"/>' +
+        '<rect x="430" y="50" width="150" height="260" rx="14" stroke="' + ln + '" stroke-width="1.5"/>' +
+        '<rect x="80" y="76" width="110" height="46" rx="8" fill="' + ln + '" opacity="0.5"/>' +
+        '<rect x="80" y="132" width="110" height="46" rx="8" fill="' + ln + '" opacity="0.5"/>' +
+        '<rect x="265" y="76" width="110" height="46" rx="8" fill="' + a + '" opacity="0.18"/>' +
+        '<rect x="265" y="132" width="110" height="46" rx="8" fill="' + a + '" opacity="0.18"/>' +
+        '<rect x="265" y="188" width="110" height="46" rx="8" fill="' + a + '" opacity="0.18"/>' +
+        '<rect x="450" y="76" width="110" height="46" rx="8" fill="' + a2 + '" opacity="0.22"/>' +
+        '<circle cx="500" cy="99" r="6" fill="' + a2 + '"/>' +
+        '<path d="M210 99h35M395 99h35" stroke="' + tx + '" stroke-width="1.5" stroke-dasharray="4 5"/>' +
+        '<text x="60" y="40" fill="' + tx + '" font-size="12" font-family="monospace">todo · doing · done</text>' +
         '</svg>';
     }
     // cloud
@@ -471,7 +526,7 @@
     var st = main.querySelector('#skills-track');
     if (st) st.innerHTML = SKILLS.map(renderSkillPanel).join('');
 
-    var slots = { 'about-art-slot': 'about', 'community-art-slot': 'community', 'cloud-art-slot': 'cloud' };
+    var slots = { 'about-art-slot': 'about', 'community-art-slot': 'community', 'cloud-art-slot': 'cloud', 'teamflow-art-slot': 'kanban' };
     Object.keys(slots).forEach(function (id) {
       var s = main.querySelector('#' + id);
       if (s) s.innerHTML = artSVG(slots[id]);
