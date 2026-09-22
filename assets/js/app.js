@@ -471,11 +471,15 @@
     var st = main.querySelector('#skills-track');
     if (st) st.innerHTML = SKILLS.map(renderSkillPanel).join('');
 
-    var slots = { 'about-art-slot': 'about', 'community-art-slot': 'community', 'cloud-art-slot': 'cloud', 'teamflow-art-slot': 'kanban' };
+    var slots = { 'about-art-slot': 'about', 'community-art-slot': 'community', 'cloud-art-slot': 'cloud' };
     Object.keys(slots).forEach(function (id) {
       var s = main.querySelector('#' + id);
       if (s) s.innerHTML = artSVG(slots[id]);
     });
+    var teamflowSlot = main.querySelector('#teamflow-art-slot');
+    if (teamflowSlot) {
+      teamflowSlot.innerHTML = '<img src="/assets/img/teamflow-kanban.png" alt="TeamFlow Kanban board" loading="lazy">';
+    }
 
     if (route.meta === 'github') loadGitHub();
     setupSpy(route);
